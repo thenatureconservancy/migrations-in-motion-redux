@@ -781,45 +781,6 @@ export default {
           console.log('toggle dat');
           this.toggleDat();
           break;
-        case 'scene1':
-          this.scene1();
-          break;
-        case 'scene2':
-          this.scene2();
-          break;
-        case 'scene3':
-          this.scene3();
-          break;
-        case 'scene4':
-          this.playScene4();
-          break;
-        case 'scene5':
-          this.playScene5();
-          break;
-        case 'scene6':
-          this.scene6();
-          break;
-        case 'scene7':
-          this.scene7();
-          break;
-        case 'scene8':
-          this.scene8();
-          break;
-        case 'playScenes':
-          this.playScenes();
-          break;
-        case 'scene2_1':
-          this.scene2_1();
-          break;
-        case 'scene2_2':
-          this.scene2_2();
-          break;
-        case 'scene2_3':
-          this.scene2_3();
-          break;
-        case 'scene2_4':
-          this.scene2_4();
-          break;
       }
     },
     flyToLocation(map, location) {
@@ -931,10 +892,6 @@ export default {
         style: 'mapbox://styles/dmajka/ck7c4399204jm1iqrfcvlxf42',
         center: [-78, 19], // NA-SA
         zoom: 3, // starting zoom, // NA-SA
-        // center: [-60.28, -11.58], // SA
-        // zoom: 3.84, // SA
-        // center: [-96.1, 41], // NA
-        // zoom: 4,
         attributionControl: true,
         hash: true,
       });
@@ -1003,39 +960,6 @@ export default {
             { canvas: document.getElementById(divName), data: data },
             config
           );
-
-          // var activeFlowLayerField = divName + 'Active'; //this[divName + 'Active']
-          // var activeFlowColorField = divName + 'Color';
-          // var activeFlowConfig = this[activeFlowLayerField];
-          // var activeFlowLayer = this[activeFlowColorField];
-          //activeFlowConfig.COLOR_RAMP = activeFlowLayer;
-          //console.log('AFC', activeFlowConfig);
-
-          //var birdsConfigWindy = this.birdsActiveWindy;
-
-          // EXPERIMENTAL - NOT WORKING YET. ADDING AS MAPBOX CANVAS SOURCE ALLOWS
-          // THE FLOW TO CONTINUE MOVING WHILE PANNING, BUT I THINK THE INPUT COORDINATES
-          // CONFLICT WITH HOW WINDY.JS IS CALCULATING WHERE THE FLOW GOES
-          // self.map.on('load', function() {
-          //   self.map.addSource('canvas-source', {
-          //     type: 'canvas',
-          //     canvas: 'birds',
-          //     coordinates: [
-          //       [-168.86, 87.78],
-          //       [-32.024, 87.78],
-          //       [-32.024, -56.415],
-          //       [-168.86, -56.415],
-          //     ],
-          //     // Set to true if the canvas source is animated. If the canvas is static, animate should be set to false to improve performance.
-          //     animate: true,
-          //   });
-
-          //   self.map.addLayer({
-          //     id: 'canvas-layer',
-          //     type: 'raster',
-          //     source: 'canvas-source',
-          //   });
-          // });
 
           resetWind(map, windy, divName, this[divName + windyContainer]);
 
@@ -1448,9 +1372,9 @@ body {
 .hide {
   display: none !important;
 }
-.nocursor {
+/* .nocursor {
   cursor: none !important;
-}
+} */
 
 /* .mapboxgl-control-container {
   display: none;
