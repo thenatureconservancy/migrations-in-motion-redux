@@ -302,6 +302,14 @@
 
     <div id="viz-meta" v-if="showCaption">
       <h1>Migrations<br />In Motion</h1>
+      <!-- <div v-html="activeContent"></div> -->
+      <div v-for="c in content" :key="c.step">
+        <div v-html="c.text"></div>
+      </div>
+      <div class="content-navigation">
+        <span class="prev">Prev</span>
+        <span class="next">Next</span>
+      </div>
     </div>
 
     <div
@@ -322,27 +330,6 @@
       style="display:initial"
       class="wind-map-container nocursor"
       id="windContaineramphibs"
-      v-bind:class="{ hide: !amphibsOn }"
-    ></div>
-
-    <div
-      style="display:initial"
-      class="wind-map-container nocursor"
-      id="windContainerbirds2"
-      v-bind:class="{ hide: !birdsOn }"
-    ></div>
-
-    <div
-      style="display:initial"
-      class="wind-map-container nocursor"
-      id="windContainermammals2"
-      v-bind:class="{ hide: !mammalsOn }"
-    ></div>
-
-    <div
-      style="display:initial"
-      class="wind-map-container nocursor"
-      id="windContaineramphibs2"
       v-bind:class="{ hide: !amphibsOn }"
     ></div>
 
@@ -752,13 +739,26 @@ export default {
         },
         {
           step: 4,
-          text: '<h2></h2> <p></p>',
+          text:
+            '<h2>So...</h2> <p><strong>Q: Does this mean 3000 species will move through my backyard because of climate change?</strong></p><p><strong>A:</strong> No, the researchers used coarse 50 km data, which is good for understanding the big picture view, but not good for understanding local patterns.</p>',
         },
         {
           step: 5,
-          text: '<h2></h2> <p></p>',
+          text:
+            "<h2>Credits</h2><p>This map was created by <a href='https://twitter.com/dan_majka'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This visualization would not have been possible without the incredible prior work of the <a href='http://hint.fm/wind/'>hint.fm wind map</a>, cambecc's <a href='https://earth.nullschool.net/'>earth wind map</a>, and <a href='https://github.com/FreshyLabs/windy'>Chris Helm's adaptation</a> of cambecc's code. </p><p>Thanks to <a href='http://mapbox.com'>Mapbox</a> and <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> for the basemaps!</p>",
+        },
+        {
+          step: 6,
+          text:
+            '<h2>What Next?</h2><p>Want to learn more about climate change? Check out the <a href="https://www.nature.org/news/climate-change-is-a-threat-to-all-animals-1.18091">Nature News</a> and <a href="https://www.nature.org/news/climate-change-is-a-threat-to-all-animals-1.18091">Nature News</a>.</p>',
+        },
+        {
+          step: 7,
+          text:
+            '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
         },
       ],
+      activeContentStep: 0,
     };
   },
   methods: {
@@ -844,37 +844,10 @@ export default {
         }
       }, fadeTime / 50);
     },
-    fadeAndRemove(divId) {
-      // First apply css class to fade out.
-      // var canvasNode = document.getElementById(divId);
-      // canvasNode.classList.add('fadeOut10');
-
-      var canvasNode = document.getElementById(divId);
-      canvasNode.classList.add('fadeOut10');
-
-      // Now remove div
-      setTimeout(function() {
-        document.getElementById(divId).remove();
-      }, 9500);
-    },
     removeDiv(divId, removeTime) {
       setTimeout(function() {
         document.getElementById(divId).remove();
       }, removeTime);
-    },
-
-    removeClassName(divId, className, time) {
-      setTimeout(function() {
-        var element = document.getElementById(divId);
-        element.classList.remove(className);
-      }, time);
-    },
-
-    addClassName(divId, className, time) {
-      setTimeout(function() {
-        var element = document.getElementById(divId);
-        element.classList.add(className);
-      }, time);
     },
 
     createMap() {
@@ -1084,12 +1057,16 @@ export default {
       this.buildFlow(self.map, 'mammals', mammals, 'ActiveWindy', []);
       this.buildFlow(self.map, 'amphibs', amphibs, 'ActiveWindy', []);
     },
+    nextContent() {
+      this.activeContentStep = this.activeContentStep + 1;
+    },
+    previousContent() {
+      this.activeContentStep = this.activeContentStep - 1;
+    },
   },
   mounted: function() {
     this.createMap();
     this.loadFlowLayers();
-
-    //this.scene0b();
   },
   watch: {
     mapCountryLabels: {
@@ -1255,6 +1232,9 @@ export default {
     },
   },
   computed: {
+    activeContent() {
+      return this.content[this.activeContentStep].text;
+    },
     amphibsActiveWindy() {
       //var birdsConfig = this.birdsActive;
       let amphibsConfig = JSON.parse(JSON.stringify(this.amphibsActive));
@@ -1334,6 +1314,7 @@ body {
   margin: 0px;
   font-family: 'Open Sans', sans-serif;
 }
+
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Open Sans', 'Futura Bold', helvetica, arial, 'arial narrow',
@@ -1342,10 +1323,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #000;
+  color: white;
   margin-top: 0px;
   width: 100%;
   height: 100%;
+}
+p {
+  color: white;
+  text-align: left;
+  margin: 10px 10px;
+}
+h2 {
+  font-size: 24px;
+  margin: 10px 10px 0px;
+  color: #fff;
+  padding: 3px 5px;
+  display: inline-block;
+  background: #fc47dc;
+  text-align: left;
+  /* transform: rotate(-2deg); */
 }
 
 /* .map-wrapper {
@@ -1451,9 +1447,11 @@ div.vue-dat-gui .group {
   bottom: 10px;
   width: 340px;
   min-height: 280px;
-  max-height: 460px;
+  max-height: 360px;
+  /* height: 90vh; */
   border: 5px solid #000;
   background: #000;
+  overflow-y: scroll;
 }
 
 #viz-meta h1 {
