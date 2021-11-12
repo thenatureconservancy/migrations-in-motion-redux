@@ -301,14 +301,10 @@
     </keep-alive>
 
     <div id="viz-meta" v-if="showCaption">
-      <h1>Migrations<br />In Motion</h1>
+      <h1>Migrations <br class="title-break" />In Motion</h1>
       <!-- <div v-html="activeContent"></div> -->
       <div v-for="c in content" :key="c.step">
         <div v-html="c.text"></div>
-      </div>
-      <div class="content-navigation">
-        <span class="prev">Prev</span>
-        <span class="next">Next</span>
       </div>
     </div>
 
@@ -730,12 +726,12 @@ export default {
         {
           step: 2,
           text:
-            '<h2>How?</h2><p>Researchers from University of Washington and The Nature Conservancy modeled potential habitat for 2954 species using climate change projections and the climatic needs of each species.</p> <p>Using flow models from electronic circuit theory, they plotted movement routes for each species, connecting current habitats with their projected locations under climate change.</p>',
+            '<h2>How?</h2><p>Researchers from University of Washington and The Nature Conservancy modeled potential habitat for 2954 species using climate change projections and the climatic needs of each species.</p> <p>Using flow models from <a href="https://www.circuitscape.org/" target="_blank">electronic circuit theory</a>, they plotted movement routes for each species, connecting current habitats with their projected locations under climate change.</p>',
         },
         {
           step: 3,
           text:
-            '<h2>What Can We Do?</h2> <p>There are a number of ways that conservationists and land managers can re-build or maintain connectivity to improve species’ ability to adapt to warmer temperatures. Removing fencing, adding wildlife overpasses (or underpasses) to major roadways, and better routing of infrastructure like pipelines and powerlines can all help re-connect areas fragmented by human development.</p>',
+            '<h2>What Can We Do?</h2> <p>There are a number of ways that conservationists and land managers can <a href="https://blog.nature.org/science/2016/06/29/species-on-the-move-mapping-barriers-for-wildlife-in-a-warming-world/?utm_source=cgs&utm_medium=alsoin&utm_campaign=migrations" target="_blank">re-build or maintain connectivity</a> to improve species’ ability to adapt to warmer temperatures. Removing fencing, adding wildlife overpasses (or underpasses) to major roadways, and better routing of infrastructure like pipelines and powerlines can all help re-connect areas fragmented by human development.</p>',
         },
         {
           step: 4,
@@ -745,17 +741,12 @@ export default {
         {
           step: 5,
           text:
-            "<h2>Credits</h2><p>This map was created by <a href='https://twitter.com/dan_majka'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This visualization would not have been possible without the incredible prior work of the <a href='http://hint.fm/wind/'>hint.fm wind map</a>, cambecc's <a href='https://earth.nullschool.net/'>earth wind map</a>, and <a href='https://github.com/FreshyLabs/windy'>Chris Helm's adaptation</a> of cambecc's code. </p><p>Thanks to <a href='http://mapbox.com'>Mapbox</a> and <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> for the basemaps!</p>",
-        },
-        {
-          step: 6,
-          text:
-            '<h2>What Next?</h2><p>Want to learn more about climate change? Check out the <a href="https://www.nature.org/news/climate-change-is-a-threat-to-all-animals-1.18091">Nature News</a> and <a href="https://www.nature.org/news/climate-change-is-a-threat-to-all-animals-1.18091">Nature News</a>.</p>',
+            "<h2>Credits</h2><p>This map was created by <a href='https://twitter.com/dan_majka' target='_blank'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This work would have not been possible without the <a href='https://blog.nature.org/science/2018/04/26/innovation-for-conservation-brad-mcrae-1966-2017/' target='_blank'>pioneering connectivity science of Brad McRae (1966-2017).</p>",
         },
         {
           step: 7,
           text:
-            '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
+            '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract" target="_blank">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
         },
       ],
       activeContentStep: 0,
@@ -1023,15 +1014,6 @@ export default {
       console.log('toggle Dat');
       let captionState = this.showDat;
       this.showDat = captionState ? false : true;
-
-      // turn off cursor. Commented out for now
-      // if (captionState === true) {
-      //   document.body.requestPointerLock();
-      // } else {
-      //   document.exitPointerLock();
-      // }
-
-      //document.getElementById('birds').remove();
     },
     loadFlowLayers() {
       var self = this;
@@ -1246,17 +1228,6 @@ export default {
       amphibsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
       return amphibsConfig;
     },
-    amphibsActiveWindy2() {
-      //var birdsConfig = this.birdsActive;
-      let amphibsConfig = JSON.parse(JSON.stringify(this.amphibsActive2));
-      var amphibsColor = this.amphibsColor;
-      amphibsConfig.FADE_FILL_STYLE =
-        'rgba(0, 0, 0, ' + amphibsConfig.FADE_TRANSPARENCY + ')';
-      amphibsConfig.COLOR_RAMP = (' ' + amphibsColor).slice(1);
-      amphibsConfig.COMPOSITE_OPERATION = this.compositeSelected;
-      //amphibsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
-      return amphibsConfig;
-    },
     birdsActiveWindy() {
       //var birdsConfig = this.birdsActive;
       let birdsConfig = JSON.parse(JSON.stringify(this.birdsActive));
@@ -1268,17 +1239,6 @@ export default {
       birdsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
       return birdsConfig;
     },
-    birdsActiveWindy2() {
-      //var birdsConfig = this.birdsActive;
-      let birdsConfig = JSON.parse(JSON.stringify(this.birdsActive2));
-      var birdsColor = this.birdsColor;
-      birdsConfig.FADE_FILL_STYLE =
-        'rgba(0, 0, 0, ' + birdsConfig.FADE_TRANSPARENCY + ')';
-      birdsConfig.COLOR_RAMP = (' ' + birdsColor).slice(1);
-      birdsConfig.COMPOSITE_OPERATION = this.compositeSelected;
-      //birdsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
-      return birdsConfig;
-    },
     mammalsActiveWindy() {
       //var birdsConfig = this.birdsActive;
       let mammalsConfig = JSON.parse(JSON.stringify(this.mammalsActive));
@@ -1288,17 +1248,6 @@ export default {
       mammalsConfig.COLOR_RAMP = (' ' + mammalsColor).slice(1);
       mammalsConfig.COMPOSITE_OPERATION = this.compositeSelected;
       mammalsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
-      return mammalsConfig;
-    },
-    mammalsActiveWindy2() {
-      //var birdsConfig = this.birdsActive;
-      let mammalsConfig = JSON.parse(JSON.stringify(this.mammalsActive2));
-      var mammalsColor = this.mammalsColor;
-      mammalsConfig.FADE_FILL_STYLE =
-        'rgba(0, 0, 0, ' + mammalsConfig.FADE_TRANSPARENCY + ')';
-      mammalsConfig.COLOR_RAMP = (' ' + mammalsColor).slice(1);
-      mammalsConfig.COMPOSITE_OPERATION = this.compositeSelected;
-      //mammalsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
       return mammalsConfig;
     },
   },
@@ -1341,7 +1290,7 @@ h2 {
   display: inline-block;
   background: #fc47dc;
   text-align: left;
-  /* transform: rotate(-2deg); */
+  transform: rotate(-2deg);
 }
 
 /* .map-wrapper {
@@ -1385,6 +1334,10 @@ h2 {
   background: white;
   border: 1px solid black;
   z-index: 9999999;
+}
+
+div #viz-meta div {
+  text-align: left;
 }
 
 p.dat-meta {
@@ -1446,7 +1399,6 @@ div.vue-dat-gui .group {
   left: 10px;
   bottom: 10px;
   width: 340px;
-  min-height: 280px;
   max-height: 360px;
   /* height: 90vh; */
   border: 5px solid #000;
@@ -1509,184 +1461,58 @@ canvas {
   outline: none !important;
 }
 
-.fadeIn {
-  animation: fadeIn ease 5s;
+a {
+  text-decoration: none;
+  color: #47d4fc;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+a:hover {
+  text-decoration: none;
+  color: #47d4fc;
+  border-bottom: 1px solid #47d4fc;
 }
 
-.fadeIn2 {
-  animation: fadeIn2 ease 2s;
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: black #fc47dc;
 }
 
-@keyframes fadeIn2 {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 4px;
 }
 
-.fadeIn5 {
-  animation: fadeIn5 linear 5s;
+*::-webkit-scrollbar-track {
+  background: black;
 }
 
-@keyframes fadeIn5 {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+*::-webkit-scrollbar-thumb {
+  background-color: #666;
+  border-radius: 0px;
+  border: 0px solid yellow;
 }
 
-.fadeIn10 {
-  animation: fadeIn10 linear 10s;
-}
+@media (max-width: 480px) {
+  .vue-dat-gui {
+    display: none;
+  }
 
-@keyframes fadeIn10 {
-  0% {
-    opacity: 0;
+  #viz-meta {
+    max-height: 240px;
+    height: 240px;
   }
-  100% {
-    opacity: 1;
+  #viz-meta h1 {
+    font-size: 20px;
   }
-}
-
-.fadeIn15 {
-  animation: fadeIn15 linear 15s;
-}
-
-@keyframes fadeIn15 {
-  0% {
-    opacity: 0;
+  #viz-meta h2 {
+    font-size: 16px;
   }
-  100% {
-    opacity: 1;
+  #viz-meta p {
+    font-size: 14px;
   }
-}
-
-.fadeIn20 {
-  animation: fadeIn20 linear 20s;
-}
-
-@keyframes fadeIn20 {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.fadeIn20b {
-  animation: fadeIn20b linear 20s;
-}
-
-@keyframes fadeIn20b {
-  0% {
-    opacity: 0;
-  }
-  75% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.fadeIn30b {
-  animation: fadeIn30b linear 30s;
-}
-
-@keyframes fadeIn30b {
-  0% {
-    opacity: 0;
-  }
-  75% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.fadeIn40b {
-  animation: fadeIn40b linear 40s;
-}
-
-@keyframes fadeIn40b {
-  0% {
-    opacity: 0;
-  }
-  75% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.fadeOut5 {
-  animation: fadeOut5 linear 5s;
-}
-
-@keyframes fadeOut5 {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.fadeOut10 {
-  animation: fadeOut10 linear 10s;
-}
-
-@keyframes fadeOut10 {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.fadeOut15 {
-  animation: fadeOut15 linear 15s;
-}
-
-@keyframes fadeOut15 {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.fadeOut20 {
-  animation: fadeOut20 linear 20s;
-}
-
-@keyframes fadeOut20 {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
+  .title-break {
+    display: none;
   }
 }
 </style>
