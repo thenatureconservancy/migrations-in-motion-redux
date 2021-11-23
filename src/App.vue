@@ -860,6 +860,12 @@ export default {
         hash: true,
       });
 
+      // disable map rotation using right click + drag
+      map.dragRotate.disable();
+
+      // disable map rotation using touch rotation gesture
+      map.touchZoomRotate.disableRotation();
+
       map.addControl(
         new mapboxgl.NavigationControl({
           showCompass: false,
