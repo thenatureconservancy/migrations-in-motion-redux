@@ -25,8 +25,8 @@
           </dat-folder> -->
 
           <dat-folder label="Map Properties">
-            <dat-boolean v-model="mapCountryLabels" label="Country Labels" />
-            <dat-boolean v-model="mapCityLabels" label="City Labels" />
+            <!-- <dat-boolean v-model="mapCountryLabels" label="Country Labels" />
+            <dat-boolean v-model="mapCityLabels" label="City Labels" /> -->
             <dat-number
               v-model="mapCountryLineWidth"
               :min="0"
@@ -52,30 +52,30 @@
             /> -->
 
             <dat-color v-model="mapLandColor" label="Land Color" />
-            <dat-number
+            <!-- <dat-number
               v-model="mapLandOpacity"
               :min="0"
               :max="1"
               :step="0.01"
               label="Land Opacity"
-            />
-            <dat-color v-model="mapWaterColor" label="Ocean Color" />
+            /> -->
+            <!-- <dat-color v-model="mapWaterColor" label="Ocean Color" />
             <dat-number
               v-model="mapWaterOpacity"
               :min="0"
               :max="1"
               :step="0.005"
               label="Ocean Opacity"
-            />
+            /> -->
 
-            <dat-color v-model="mapLakeColor" label="Lake Color" />
+            <!-- <dat-color v-model="mapLakeColor" label="Lake Color" />
             <dat-number
               v-model="mapLakeOpacity"
               :min="0"
               :max="1"
               :step="0.005"
               label="Lake Opacity"
-            />
+            /> -->
             <dat-number
               v-model="mapSatelliteOpacity"
               :min="0"
@@ -330,49 +330,64 @@
     ></div>
 
     <div class="mapbox-map-container nocursor">
-      <div id="map" class="nocursor"></div>
+      <div id="map" class="nocursor">
+        <div id="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #fcfa47"></div>
+            <div class="legend-text">Amphibians</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #47d4fc"></div>
+            <div class="legend-text">Birds</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #fc47dc"></div>
+            <div class="legend-text">Mammals</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { Windy } from '@/modules/windy.js';
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { Windy } from "@/modules/windy.js";
 
 // import './windy.js';
 
 export default {
-  name: 'App',
+  name: "App",
   data: function() {
     return {
       showCaption: true,
       showDat: true,
       mapSatelliteOpacity: 0,
       map: {},
-      mapLandColor: '#000000',
+      mapLandColor: "#000000",
       mapLandOpacity: 1,
-      mapWaterColor: '#ffffff',
+      mapWaterColor: "#ffffff",
       mapWaterOpacity: 1,
-      mapLakeColor: '#a3bbc7',
+      mapLakeColor: "#a3bbc7",
       mapLakeOpacity: 0,
-      mapCountryLineColor: '#ffffff',
+      mapCountryLineColor: "#ffffff",
       mapCountryLineWidth: 1,
       mapCountryLineOpacity: 1,
       mapCountryLabels: true,
       mapCityLabels: true,
       mapRoadsOpacity: 0,
-      activeScenario: 'scene1',
+      activeScenario: "scene1",
       amphibsOn: true,
-      amphibsColor: '#fcfa47',
+      amphibsColor: "#fcfa47",
       amphibsActive: {},
       amphibsActive2: {},
       birdsOn: true,
-      birdsColor: '#47d4fc',
+      birdsColor: "#47d4fc",
       birdsActive: {},
       birdsActive2: {},
       mammalsOn: true,
-      mammalsColor: '#fc47dc',
+      mammalsColor: "#fc47dc",
       mammalsActive: {},
       mammalsActive2: {},
       titleFontSize: 75,
@@ -386,34 +401,34 @@ export default {
         z7: 0.2,
       },
       compositeOptions: [
-        { name: 'source-over', value: 'source-over' },
-        { name: 'source-atop', value: 'source-atop' },
-        { name: 'source-in', value: 'source-in' },
-        { name: 'source-out', value: 'source-out' },
-        { name: 'destination-over', value: 'destination-over' },
-        { name: 'destination-atop', value: 'destination-atop' },
-        { name: 'destination-in', value: 'destination-in' },
-        { name: 'destination-out', value: 'destination-out' },
-        { name: 'lighter', value: 'lighter' },
-        { name: 'copy', value: 'copy' },
-        { name: 'xor', value: 'xor' },
-        { name: 'multiply', value: 'multiply' },
-        { name: 'screen', value: 'screen' },
-        { name: 'overlay', value: 'overlay' },
-        { name: 'darken', value: 'darken' },
-        { name: 'lighten', value: 'lighten' },
-        { name: 'color-dodge', value: 'color-dodge' },
-        { name: 'color-burn', value: 'color-burn' },
-        { name: 'hard-light', value: 'hard-light' },
-        { name: 'soft-light', value: 'soft-light' },
-        { name: 'difference', value: 'difference' },
-        { name: 'exclusion', value: 'exclusion' },
-        { name: 'hue', value: 'hue' },
-        { name: 'saturation', value: 'saturation' },
-        { name: 'color', value: 'color' },
-        { name: 'luminosity', value: 'luminosity' },
+        // { name: "source-over", value: "source-over" },
+        // { name: "source-atop", value: "source-atop" },
+        { name: "source-in", value: "source-in" },
+        // { name: "source-out", value: "source-out" },
+        { name: "destination-over", value: "destination-over" },
+        { name: "destination-atop", value: "destination-atop" },
+        { name: "destination-in", value: "destination-in" },
+        { name: "destination-out", value: "destination-out" },
+        { name: "lighter", value: "lighter" },
+        { name: "copy", value: "copy" },
+        // { name: "xor", value: "xor" },
+        { name: "multiply", value: "multiply" },
+        { name: "screen", value: "screen" },
+        { name: "overlay", value: "overlay" },
+        { name: "darken", value: "darken" },
+        { name: "lighten", value: "lighten" },
+        { name: "color-dodge", value: "color-dodge" },
+        { name: "color-burn", value: "color-burn" },
+        { name: "hard-light", value: "hard-light" },
+        { name: "soft-light", value: "soft-light" },
+        { name: "difference", value: "difference" },
+        { name: "exclusion", value: "exclusion" },
+        { name: "hue", value: "hue" },
+        { name: "saturation", value: "saturation" },
+        { name: "color", value: "color" },
+        { name: "luminosity", value: "luminosity" },
       ],
-      compositeSelected: 'destination-in',
+      compositeSelected: "destination-in",
       default: {
         zoomWidth: {
           default: 0.9,
@@ -437,12 +452,12 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#fcfa47', // blue
+            COLOR_RAMP: "#fcfa47", // blue
             COLOR_ALPHA: 0.9,
-            COMPOSITE_OPERATION: 'destination-in',
-            spData: 'data/perlin8_5_2_direction.json',
-            spName: 'amphibs',
-            sceneName: 'perlin land + water',
+            COMPOSITE_OPERATION: "destination-in",
+            spData: "data/perlin8_5_2_direction.json",
+            spName: "amphibs",
+            sceneName: "perlin land + water",
           },
           birds: {
             VELOCITY_SCALE: 0.03, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -454,11 +469,11 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#47d4fc', // blue
+            COLOR_RAMP: "#47d4fc", // blue
             COLOR_ALPHA: 0.9,
-            COMPOSITE_OPERATION: 'destination-in',
-            spData: 'data/perlin4_4_1_direction.json',
-            spName: 'birds',
+            COMPOSITE_OPERATION: "destination-in",
+            spData: "data/perlin4_4_1_direction.json",
+            spName: "birds",
           },
           mammals: {
             VELOCITY_SCALE: 0.03, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -470,11 +485,11 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#fc47dc', // blue
+            COLOR_RAMP: "#fc47dc", // blue
             COLOR_ALPHA: 0.9,
-            COMPOSITE_OPERATION: 'destination-in',
-            spData: 'data/perlin16_3_4_direction.json',
-            spName: 'mammals',
+            COMPOSITE_OPERATION: "destination-in",
+            spData: "data/perlin16_3_4_direction.json",
+            spName: "mammals",
           },
         },
         scene2: {
@@ -488,10 +503,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#fcfa47', // blue
+            COLOR_RAMP: "#fcfa47", // blue
             COLOR_ALPHA: 0.9,
-            spData: 'data/perlin_8_west.json',
-            spName: 'amphibs',
+            spData: "data/perlin_8_west.json",
+            spName: "amphibs",
           },
           birds: {
             VELOCITY_SCALE: 0.03, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -503,10 +518,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#47d4fc', // blue
+            COLOR_RAMP: "#47d4fc", // blue
             COLOR_ALPHA: 0.9,
-            spData: 'data/perlin_4_west.json',
-            spName: 'birds',
+            spData: "data/perlin_4_west.json",
+            spName: "birds",
           },
           mammals: {
             VELOCITY_SCALE: 0.03, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -518,10 +533,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#fc47dc', // blue
+            COLOR_RAMP: "#fc47dc", // blue
             COLOR_ALPHA: 0.9,
-            spData: 'data/perlin_16_west.json',
-            spName: 'mammals',
+            spData: "data/perlin_16_west.json",
+            spName: "mammals",
           },
         },
         scene4: {
@@ -535,12 +550,12 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#fcfa47', // blue
+            COLOR_RAMP: "#fcfa47", // blue
             COLOR_ALPHA: 0.9,
             // spData: 'data/perlin_8_west.json',
-            spData: 'data/perlin_8_5_rd_direction.json',
-            spName: 'amphibs',
-            sceneName: 'perlin land only',
+            spData: "data/perlin_8_5_rd_direction.json",
+            spName: "amphibs",
+            sceneName: "perlin land only",
           },
           birds: {
             VELOCITY_SCALE: 0.03, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -552,11 +567,11 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#47d4fc', // blue
+            COLOR_RAMP: "#47d4fc", // blue
             COLOR_ALPHA: 0.9,
             // spData: 'data/perlin_4_west.json',
-            spData: 'data/perlin4_4_1_r_direction.json',
-            spName: 'birds',
+            spData: "data/perlin4_4_1_r_direction.json",
+            spName: "birds",
           },
           mammals: {
             VELOCITY_SCALE: 0.03, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -568,11 +583,11 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.7,
-            COLOR_RAMP: '#fc47dc', // blue
+            COLOR_RAMP: "#fc47dc", // blue
             COLOR_ALPHA: 0.9,
             // spData: 'data/perlin_16_west.json',
-            spData: 'data/perlin16_3_4_m_r_direction.json',
-            spName: 'mammals',
+            spData: "data/perlin16_3_4_m_r_direction.json",
+            spName: "mammals",
           },
         },
         scene5: {
@@ -586,10 +601,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.98,
-            COLOR_RAMP: '#fcfa47', // blue
+            COLOR_RAMP: "#fcfa47", // blue
             COLOR_ALPHA: 0.95,
-            spData: 'data/amphibs_mag.json',
-            spName: 'amphibs',
+            spData: "data/amphibs_mag.json",
+            spName: "amphibs",
           },
           birds: {
             VELOCITY_SCALE: 0.15, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -601,10 +616,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.98,
-            COLOR_RAMP: '#47d4fc', // blue
+            COLOR_RAMP: "#47d4fc", // blue
             COLOR_ALPHA: 0.95,
-            spData: 'data/birds_direction.json',
-            spName: 'birds',
+            spData: "data/birds_direction.json",
+            spName: "birds",
           },
           mammals: {
             VELOCITY_SCALE: 0.15, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -616,10 +631,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.98,
-            COLOR_RAMP: '#fc47dc', // blue
+            COLOR_RAMP: "#fc47dc", // blue
             COLOR_ALPHA: 0.95,
-            spData: 'data/mammals_mag.json',
-            spName: 'mammals',
+            spData: "data/mammals_mag.json",
+            spName: "mammals",
           },
         },
         scene6: {
@@ -633,10 +648,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.96,
-            COLOR_RAMP: '#fcfa47', // blue
+            COLOR_RAMP: "#fcfa47", // blue
             COLOR_ALPHA: 1,
-            spData: 'data/amphibs_mag.json',
-            spName: 'amphibs',
+            spData: "data/amphibs_mag.json",
+            spName: "amphibs",
           },
           birds: {
             VELOCITY_SCALE: 0.15, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -648,10 +663,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.96,
-            COLOR_RAMP: '#47d4fc', // blue
+            COLOR_RAMP: "#47d4fc", // blue
             COLOR_ALPHA: 1,
-            spData: 'data/birds_direction.json',
-            spName: 'birds',
+            spData: "data/birds_direction.json",
+            spName: "birds",
           },
           mammals: {
             VELOCITY_SCALE: 0.15, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -663,10 +678,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.96,
-            COLOR_RAMP: '#fc47dc', // blue
+            COLOR_RAMP: "#fc47dc", // blue
             COLOR_ALPHA: 1,
-            spData: 'data/mammals_mag.json',
-            spName: 'mammals',
+            spData: "data/mammals_mag.json",
+            spName: "mammals",
           },
         },
         scene7: {
@@ -680,10 +695,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.98,
-            COLOR_RAMP: '#fcfa47', // blue
+            COLOR_RAMP: "#fcfa47", // blue
             COLOR_ALPHA: 0.95,
-            spData: 'data/amphibs_mag.json',
-            spName: 'amphibs',
+            spData: "data/amphibs_mag.json",
+            spName: "amphibs",
           },
           birds: {
             VELOCITY_SCALE: 0.15, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -695,10 +710,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.98,
-            COLOR_RAMP: '#47d4fc', // blue
+            COLOR_RAMP: "#47d4fc", // blue
             COLOR_ALPHA: 0.95,
-            spData: 'data/birds_direction.json',
-            spName: 'birds',
+            spData: "data/birds_direction.json",
+            spName: "birds",
           },
           mammals: {
             VELOCITY_SCALE: 0.15, // scale for wind velocity (completely arbitrary--this value looks nice)
@@ -710,10 +725,10 @@ export default {
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
             FADE_TRANSPARENCY: 0.98,
-            COLOR_RAMP: '#fc47dc', // blue
+            COLOR_RAMP: "#fc47dc", // blue
             COLOR_ALPHA: 0.95,
-            spData: 'data/mammals_mag.json',
-            spName: 'mammals',
+            spData: "data/mammals_mag.json",
+            spName: "mammals",
           },
         },
       },
@@ -721,7 +736,7 @@ export default {
         {
           step: 1,
           text:
-            '<p>As climate change alters habitats and disrupts ecosystems, where will animals move to survive? And will human development prevent them from getting there?</p> <p>This map shows the average direction mammals, birds, and amphibians need to move to track hospitable climates as they shift across the landscape.</p>',
+            "<p>As climate change alters habitats and disrupts ecosystems, where will animals move to survive? And will human development prevent them from getting there?</p> <p>This map shows the average direction mammals, birds, and amphibians need to move to track hospitable climates as they shift across the landscape.</p>",
         },
         {
           step: 2,
@@ -736,7 +751,7 @@ export default {
         {
           step: 4,
           text:
-            '<h2>So...</h2> <p><strong>Q: Does this mean 3000 species will move through my backyard because of climate change?</strong></p><p><strong>A:</strong> No, the researchers used coarse 50 km data, which is good for understanding the big picture view, but not good for understanding local patterns.</p>',
+            "<h2>So...</h2> <p><strong>Q: Does this mean 3000 species will move through my backyard because of climate change?</strong></p><p><strong>A:</strong> No, the researchers used coarse 50 km data, which is good for understanding the big picture view, but not good for understanding local patterns.</p>",
         },
         {
           step: 5,
@@ -764,12 +779,12 @@ export default {
     },
     shortcuts(event) {
       switch (event.srcKey) {
-        case 'caption':
-          console.log('toggle caption');
+        case "caption":
+          console.log("toggle caption");
           this.toggleCaption();
           break;
-        case 'dat':
-          console.log('toggle dat');
+        case "dat":
+          console.log("toggle dat");
           this.toggleDat();
           break;
       }
@@ -809,7 +824,7 @@ export default {
       var coords = locations[location].coords;
       var zoom = locations[location].zoom;
 
-      console.log('flying to ' + location);
+      console.log("flying to " + location);
 
       map.flyTo({
         center: coords,
@@ -823,9 +838,9 @@ export default {
       var self = this;
       var counter = 0;
       var opacityFader = setInterval(function() {
-        if (fadeDirection === 'in') {
+        if (fadeDirection === "in") {
           self[layer] = counter / 50;
-        } else if (fadeDirection === 'out') {
+        } else if (fadeDirection === "out") {
           self[layer] = 1 - counter / 50;
         }
 
@@ -848,12 +863,12 @@ export default {
       // mapboxgl.accessToken =
       //   'pk.eyJ1IjoiZG1hamthIiwiYSI6IlNuSHVNb0UifQ.zIkArM4rtyvdtMZjZEesBA';
       mapboxgl.accessToken =
-        'pk.eyJ1IjoiZG1hamthIiwiYSI6ImNrcmJpMjE2bTR0ZmwydnRmNm4xMG5yMGMifQ.XtPOIE4pFFUEIDcXc8W0oQ';
+        "pk.eyJ1IjoiZG1hamthIiwiYSI6ImNrcmJpMjE2bTR0ZmwydnRmNm4xMG5yMGMifQ.XtPOIE4pFFUEIDcXc8W0oQ";
       const map = new mapboxgl.Map({
-        container: 'map', // container id
+        container: "map", // container id
         //style: "mapbox://styles/tncmapbox/cke4snn1m1h5619mp2n6r9afk", // DEV2
         //style: 'mapbox://styles/dmajka/ck21ant3kdor91cp7bjijnavk', // Albers
-        style: 'mapbox://styles/dmajka/ck7c4399204jm1iqrfcvlxf42',
+        style: "mapbox://styles/dmajka/ck7c4399204jm1iqrfcvlxf42",
         center: [-78, 19], // NA-SA
         zoom: 3, // starting zoom, // NA-SA
         attributionControl: true,
@@ -870,20 +885,20 @@ export default {
         new mapboxgl.NavigationControl({
           showCompass: false,
         }),
-        'top-left'
+        "top-left"
       );
 
-      map.on('load', () => {
-        console.log('map loaded');
+      map.on("load", () => {
+        console.log("map loaded");
       }); // end map on load event
 
-      map.once('idle', () => {
-        console.log('map once idle');
+      map.once("idle", () => {
+        console.log("map once idle");
       }); // end map on load event
 
-      map.on('load', function() {
-        map.setPaintProperty('lakes-7oy7ga', 'fill-opacity', 0);
-        map.setPaintProperty('americas-mask2-c5phmk', 'fill-opacity', 1);
+      map.on("load", function() {
+        map.setPaintProperty("lakes-7oy7ga", "fill-opacity", 0);
+        map.setPaintProperty("americas-mask2-c5phmk", "fill-opacity", 1);
       });
 
       self.map = map;
@@ -907,7 +922,7 @@ export default {
       } else {
         particleWidth = self.zoomWidth.z7;
       }
-      console.log('particle width', particleWidth);
+      console.log("particle width", particleWidth);
       return particleWidth;
     },
     buildFlow(map, divName, config, windyContainer, cssClassArray) {
@@ -919,10 +934,10 @@ export default {
           // Remember - dom elements with ID, are exposed globally, so mapcanvas element exists already
           var self = this;
           var windy, timeout;
-          var parentNode = document.getElementById('windContainer' + divName);
-          var canvasNode = document.createElement('canvas');
+          var parentNode = document.getElementById("windContainer" + divName);
+          var canvasNode = document.createElement("canvas");
           canvasNode.id = divName;
-          canvasNode.className = 'flowLayer';
+          canvasNode.className = "flowLayer";
           canvasNode.classList.add(...cssClassArray);
           parentNode.appendChild(canvasNode);
 
@@ -934,13 +949,13 @@ export default {
           resetWind(map, windy, divName, this[divName + windyContainer]);
 
           // REBUILD WIND AFTER MOVING, ZOOMING, OR RESIZING MAP
-          self.map.on('resize', () => {
+          self.map.on("resize", () => {
             resetWind(map, windy, divName, this[divName + windyContainer]);
           });
-          self.map.on('move', () => {
+          self.map.on("move", () => {
             resetWind(map, windy, divName, this[divName + windyContainer]);
           });
-          self.map.on('zoom', () => {
+          self.map.on("zoom", () => {
             resetWind(map, windy, divName, this[divName + windyContainer]);
           });
 
@@ -950,9 +965,9 @@ export default {
             var { north, south, west, east, width, height } = obj;
 
             try {
-              mapcanvas.style.display = 'none';
+              mapcanvas.style.display = "none";
             } catch {
-              console.log('oops');
+              console.log("oops");
             }
 
             if (windy) {
@@ -964,7 +979,7 @@ export default {
             timeout = setTimeout(function() {
               var width2, height2;
 
-              mapcanvas.style.display = 'initial';
+              mapcanvas.style.display = "initial";
               mapcanvas.width = width; // /2
               mapcanvas.height = height;
 
@@ -1011,13 +1026,13 @@ export default {
         });
     },
     toggleCaption() {
-      console.log('toggle caption');
+      console.log("toggle caption");
       let captionState = this.showCaption;
       this.showCaption = captionState ? false : true;
       //document.getElementById('birds').remove();
     },
     toggleDat() {
-      console.log('toggle Dat');
+      console.log("toggle Dat");
       let captionState = this.showDat;
       this.showDat = captionState ? false : true;
     },
@@ -1034,16 +1049,16 @@ export default {
       var mammals = this.mammalsActiveWindy;
 
       // Map properties - fade in countries and country lines
-      this.fadeOpacity('mapCountryLineOpacity', 'in', 10);
+      this.fadeOpacity("mapCountryLineOpacity", "in", 10);
       //this.mapCountryLineOpacity = 1;
       setTimeout(function() {
         self.mapCountryLabels = true;
       }, 10);
 
       // Build flow layers
-      this.buildFlow(self.map, 'birds', birds, 'ActiveWindy', []);
-      this.buildFlow(self.map, 'mammals', mammals, 'ActiveWindy', []);
-      this.buildFlow(self.map, 'amphibs', amphibs, 'ActiveWindy', []);
+      this.buildFlow(self.map, "birds", birds, "ActiveWindy", []);
+      this.buildFlow(self.map, "mammals", mammals, "ActiveWindy", []);
+      this.buildFlow(self.map, "amphibs", amphibs, "ActiveWindy", []);
     },
     nextContent() {
       this.activeContentStep = this.activeContentStep + 1;
@@ -1060,10 +1075,10 @@ export default {
     mapCountryLabels: {
       handler() {
         var labelState = this.mapCountryLabels;
-        let labelVisibility = labelState ? 'visible' : 'none';
+        let labelVisibility = labelState ? "visible" : "none";
         this.map.setLayoutProperty(
-          'country-label-lg',
-          'visibility',
+          "country-label-lg",
+          "visibility",
           labelVisibility
         );
       },
@@ -1071,15 +1086,15 @@ export default {
     mapCityLabels: {
       handler() {
         var labelState = this.mapCityLabels;
-        let labelVisibility = labelState ? 'visible' : 'none';
+        let labelVisibility = labelState ? "visible" : "none";
         this.map.setLayoutProperty(
-          'place-city-lg-n',
-          'visibility',
+          "place-city-lg-n",
+          "visibility",
           labelVisibility
         );
         this.map.setLayoutProperty(
-          'place-city-lg-s',
-          'visibility',
+          "place-city-lg-s",
+          "visibility",
           labelVisibility
         );
       },
@@ -1089,8 +1104,8 @@ export default {
       handler() {
         let opacity = this.mapSatelliteOpacity;
         this.map.setPaintProperty(
-          'mapbox-satellite',
-          'raster-opacity',
+          "mapbox-satellite",
+          "raster-opacity",
           opacity
         );
       },
@@ -1100,8 +1115,8 @@ export default {
       handler() {
         let lineWidth = this.mapCountryLineWidth;
         this.map.setPaintProperty(
-          'admin-2-boundaries',
-          'line-width',
+          "admin-2-boundaries",
+          "line-width",
           lineWidth
         );
       },
@@ -1111,14 +1126,14 @@ export default {
       handler() {
         let opacity = this.mapCountryLineOpacity;
         this.map.setPaintProperty(
-          'admin-2-boundaries',
-          'line-opacity',
+          "admin-2-boundaries",
+          "line-opacity",
           opacity
         );
 
         this.map.setPaintProperty(
-          'admin-2-boundaries-bg',
-          'line-opacity',
+          "admin-2-boundaries-bg",
+          "line-opacity",
           opacity
         );
       },
@@ -1126,38 +1141,38 @@ export default {
     mapRoadsOpacity: {
       handler() {
         let opacity = this.mapRoadsOpacity;
-        this.map.setPaintProperty('major-roads', 'line-opacity', opacity);
+        this.map.setPaintProperty("major-roads", "line-opacity", opacity);
       },
     },
     mapLandColor: {
       handler() {
         let color = this.mapLandColor;
-        this.map.setPaintProperty('background', 'background-color', color);
+        this.map.setPaintProperty("background", "background-color", color);
       },
     },
     mapLandOpacity: {
       handler() {
         let opacity = this.mapLandOpacity;
-        this.map.setPaintProperty('background', 'background-opacity', opacity);
+        this.map.setPaintProperty("background", "background-opacity", opacity);
       },
     },
     mapLakeColor: {
       handler() {
         let color = this.mapLakeColor;
-        this.map.setPaintProperty('lakes-7oy7ga', 'fill-color', color);
+        this.map.setPaintProperty("lakes-7oy7ga", "fill-color", color);
       },
     },
     mapLakeOpacity: {
       handler() {
         let opacity = this.mapLakeOpacity;
-        this.map.setPaintProperty('lakes-7oy7ga', 'fill-opacity', opacity);
+        this.map.setPaintProperty("lakes-7oy7ga", "fill-opacity", opacity);
       },
     },
     mapWaterColor: {
       handler() {
         let color = this.mapWaterColor;
         //this.map.setPaintProperty('americas-mask2-c5phmk', 'fill-color', color);
-        this.map.setPaintProperty('water', 'fill-color', color);
+        this.map.setPaintProperty("water", "fill-color", color);
       },
     },
     mapWaterOpacity: {
@@ -1168,7 +1183,7 @@ export default {
         //   'fill-opacity',
         //   opacity
         // );
-        this.map.setPaintProperty('water', 'fill-opacity', opacity);
+        this.map.setPaintProperty("water", "fill-opacity", opacity);
       },
     },
 
@@ -1228,10 +1243,11 @@ export default {
       let amphibsConfig = JSON.parse(JSON.stringify(this.amphibsActive));
       var amphibsColor = this.amphibsColor;
       amphibsConfig.FADE_FILL_STYLE =
-        'rgba(0, 0, 0, ' + amphibsConfig.FADE_TRANSPARENCY + ')';
-      amphibsConfig.COLOR_RAMP = (' ' + amphibsColor).slice(1);
+        "rgba(0, 0, 0, " + amphibsConfig.FADE_TRANSPARENCY + ")";
+      amphibsConfig.COLOR_RAMP = (" " + amphibsColor).slice(1);
       amphibsConfig.COMPOSITE_OPERATION = this.compositeSelected;
       amphibsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
+
       return amphibsConfig;
     },
     birdsActiveWindy() {
@@ -1239,10 +1255,11 @@ export default {
       let birdsConfig = JSON.parse(JSON.stringify(this.birdsActive));
       var birdsColor = this.birdsColor;
       birdsConfig.FADE_FILL_STYLE =
-        'rgba(0, 0, 0, ' + birdsConfig.FADE_TRANSPARENCY + ')';
-      birdsConfig.COLOR_RAMP = (' ' + birdsColor).slice(1);
+        "rgba(0, 0, 0, " + birdsConfig.FADE_TRANSPARENCY + ")";
+      birdsConfig.COLOR_RAMP = (" " + birdsColor).slice(1);
       birdsConfig.COMPOSITE_OPERATION = this.compositeSelected;
       birdsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
+
       return birdsConfig;
     },
     mammalsActiveWindy() {
@@ -1250,10 +1267,11 @@ export default {
       let mammalsConfig = JSON.parse(JSON.stringify(this.mammalsActive));
       var mammalsColor = this.mammalsColor;
       mammalsConfig.FADE_FILL_STYLE =
-        'rgba(0, 0, 0, ' + mammalsConfig.FADE_TRANSPARENCY + ')';
-      mammalsConfig.COLOR_RAMP = (' ' + mammalsColor).slice(1);
+        "rgba(0, 0, 0, " + mammalsConfig.FADE_TRANSPARENCY + ")";
+      mammalsConfig.COLOR_RAMP = (" " + mammalsColor).slice(1);
       mammalsConfig.COMPOSITE_OPERATION = this.compositeSelected;
       mammalsConfig.PARTICLE_LINE_WIDTH = this.calculateParticleWidth();
+
       return mammalsConfig;
     },
   },
@@ -1261,20 +1279,20 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,800&display=swap");
 
 body {
   background-color: #000;
   padding: 0px;
   margin: 0px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
-  font-family: 'Open Sans', 'Futura Bold', helvetica, arial, 'arial narrow',
+  font-family: "Open Sans", "Futura Bold", helvetica, arial, "arial narrow",
     arial;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -1317,6 +1335,18 @@ h2 {
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); */
   /* border-right: 1px solid #ccc; */
 }
+
+#legend {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  z-index: 9999999;
+  color: black;
+}
+
 .small {
 }
 
@@ -1413,7 +1443,7 @@ div.vue-dat-gui .group {
 }
 
 #viz-meta h1 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   text-align: left;
   font-size: 40px;
   line-height: 1em;
