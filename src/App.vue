@@ -335,6 +335,11 @@
       <div v-for="c in content" :key="c.step">
         <div v-html="c.text"></div>
       </div>
+      <img
+        src="tnc-logo-light.svg"
+        alt="The Nature Conservancy"
+        class="tnc-logo"
+      />
     </div>
 
     <div
@@ -1609,5 +1614,10 @@ a:hover {
   .title-break {
     display: none;
   }
+}
+.tnc-logo {
+  width: 200px;
+  height: auto;
+  margin: 20px 0;
 }
 </style>
