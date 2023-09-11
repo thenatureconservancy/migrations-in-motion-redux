@@ -300,8 +300,37 @@
       </div>
     </keep-alive>
 
+    <!-- 
+#fcfa47
+#47d4fc
+#fc47dc
+    -->
+
     <div id="viz-meta" v-if="showCaption">
       <h1>Migrations <br class="title-break" />In Motion</h1>
+      <div id="legend-inline">
+        <div class="legend-item-inline" v-if="birdsOn">
+          <div
+            class="legend-color"
+            :style="{ 'background-color': birdsColor }"
+          ></div>
+          <div class="legend-text">Birds</div>
+        </div>
+        <div class="legend-item-inline" v-if="mammalsOn">
+          <div
+            class="legend-color"
+            :style="{ 'background-color': mammalsColor }"
+          ></div>
+          <div class="legend-text">Mammals</div>
+        </div>
+        <div class="legend-item-inline" v-if="amphibsOn">
+          <div
+            class="legend-color"
+            :style="{ 'background-color': amphibsColor }"
+          ></div>
+          <div class="legend-text">Amphibians</div>
+        </div>
+      </div>
       <!-- <div v-html="activeContent"></div> -->
       <div v-for="c in content" :key="c.step">
         <div v-html="c.text"></div>
@@ -309,44 +338,43 @@
     </div>
 
     <div
-      style="display:initial"
+      style="display: initial"
       class="wind-map-container nocursor"
       id="windContainerbirds"
       v-bind:class="{ hide: !birdsOn }"
     ></div>
 
     <div
-      style="display:initial"
+      style="display: initial"
       class="wind-map-container nocursor"
       id="windContainermammals"
       v-bind:class="{ hide: !mammalsOn }"
     ></div>
 
     <div
-      style="display:initial"
+      style="display: initial"
       class="wind-map-container nocursor"
       id="windContaineramphibs"
       v-bind:class="{ hide: !amphibsOn }"
     ></div>
 
     <div class="mapbox-map-container nocursor">
-      <div id="map" class="nocursor">
-        <div id="legend">
-          <div class="legend-item">
-            <div class="legend-color" style="background-color: #fcfa47"></div>
-            <div class="legend-text">Amphibians</div>
-          </div>
-          <div class="legend-item">
-            <div class="legend-color" style="background-color: #47d4fc"></div>
-            <div class="legend-text">Birds</div>
-          </div>
-          <div class="legend-item">
-            <div class="legend-color" style="background-color: #fc47dc"></div>
-            <div class="legend-text">Mammals</div>
-          </div>
-        </div>
-      </div>
+      <div id="map" class="nocursor"></div>
     </div>
+    <!-- <div id="legend">
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #fcfa47"></div>
+        <div class="legend-text">Amphibians</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #47d4fc"></div>
+        <div class="legend-text">Birds</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #fc47dc"></div>
+        <div class="legend-text">Mammals</div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -359,7 +387,7 @@ import { Windy } from "@/modules/windy.js";
 
 export default {
   name: "App",
-  data: function() {
+  data: function () {
     return {
       showCaption: true,
       showDat: true,
@@ -735,33 +763,27 @@ export default {
       content: [
         {
           step: 1,
-          text:
-            "<p>As climate change alters habitats and disrupts ecosystems, where will animals move to survive? And will human development prevent them from getting there?</p> <p>This map shows the average direction mammals, birds, and amphibians need to move to track hospitable climates as they shift across the landscape.</p>",
+          text: "<p>As climate change alters habitats and disrupts ecosystems, where will animals move to survive? And will human development prevent them from getting there?</p> <p>This map shows the average direction mammals, birds, and amphibians need to move to track hospitable climates as they shift across the landscape. &darr;</p>",
         },
         {
           step: 2,
-          text:
-            '<h2>How?</h2><p>Researchers from University of Washington and The Nature Conservancy modeled potential habitat for 2954 species using climate change projections and the climatic needs of each species.</p> <p>Using flow models from <a href="https://www.circuitscape.org/" target="_blank">electronic circuit theory</a>, they plotted movement routes for each species, connecting current habitats with their projected locations under climate change.</p>',
+          text: '<h2>How?</h2><p>Researchers from University of Washington and The Nature Conservancy modeled potential habitat for 2954 species using climate change projections and the climatic needs of each species.</p> <p>Using flow models from <a href="https://www.circuitscape.org/" target="_blank">electronic circuit theory</a>, they plotted movement routes for each species, connecting current habitats with their projected locations under climate change.</p>',
         },
         {
           step: 3,
-          text:
-            '<h2>What Can We Do?</h2> <p>There are a number of ways that conservationists and land managers can <a href="https://blog.nature.org/science/2016/06/29/species-on-the-move-mapping-barriers-for-wildlife-in-a-warming-world/?utm_source=cgs&utm_medium=alsoin&utm_campaign=migrations" target="_blank">re-build or maintain connectivity</a> to improve species’ ability to adapt to warmer temperatures. Removing fencing, adding wildlife overpasses (or underpasses) to major roadways, and better routing of infrastructure like pipelines and powerlines can all help re-connect areas fragmented by human development.</p>',
+          text: '<h2>What Can We Do?</h2> <p>There are a number of ways that conservationists and land managers can <a href="https://blog.nature.org/science/2016/06/29/species-on-the-move-mapping-barriers-for-wildlife-in-a-warming-world/?utm_source=cgs&utm_medium=alsoin&utm_campaign=migrations" target="_blank">re-build or maintain connectivity</a> to improve species’ ability to adapt to warmer temperatures. Removing fencing, adding wildlife overpasses (or underpasses) to major roadways, and better routing of infrastructure like pipelines and powerlines can all help re-connect areas fragmented by human development.</p>',
         },
         {
           step: 4,
-          text:
-            "<h2>So...</h2> <p><strong>Q: Does this mean 3000 species will move through my backyard because of climate change?</strong></p><p><strong>A:</strong> No, the researchers used coarse 50 km data, which is good for understanding the big picture view, but not good for understanding local patterns.</p>",
+          text: "<h2>So...</h2> <p><strong>Q: Does this mean 3000 species will move through my backyard because of climate change?</strong></p><p><strong>A:</strong> No, the researchers used coarse 50 km data, which is good for understanding the big picture view, but not good for understanding local patterns.</p>",
         },
         {
           step: 5,
-          text:
-            "<h2>Credits</h2><p>This map was created by <a href='https://twitter.com/dan_majka' target='_blank'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This work would have not been possible without the <a href='https://blog.nature.org/science/2018/04/26/innovation-for-conservation-brad-mcrae-1966-2017/' target='_blank'>pioneering connectivity science of Brad McRae (1966-2017).</p>",
+          text: "<h2>Credits</h2><p>This map was created by <a href='mailto:dmajka@tnc.org' target='_blank'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This work would have not been possible without the <a href='https://blog.nature.org/science/2018/04/26/innovation-for-conservation-brad-mcrae-1966-2017/' target='_blank'>pioneering connectivity science of Brad McRae (1966-2017).</p>",
         },
         {
           step: 7,
-          text:
-            '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract" target="_blank">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
+          text: '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract" target="_blank">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
         },
       ],
       activeContentStep: 0,
@@ -770,7 +792,7 @@ export default {
   methods: {
     debounce(func, wait = 100) {
       let timeout;
-      return function(...args) {
+      return function (...args) {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           func.apply(this, args);
@@ -837,7 +859,7 @@ export default {
     fadeOpacity(layer, fadeDirection, fadeTime) {
       var self = this;
       var counter = 0;
-      var opacityFader = setInterval(function() {
+      var opacityFader = setInterval(function () {
         if (fadeDirection === "in") {
           self[layer] = counter / 50;
         } else if (fadeDirection === "out") {
@@ -851,7 +873,7 @@ export default {
       }, fadeTime / 50);
     },
     removeDiv(divId, removeTime) {
-      setTimeout(function() {
+      setTimeout(function () {
         document.getElementById(divId).remove();
       }, removeTime);
     },
@@ -896,7 +918,7 @@ export default {
         console.log("map once idle");
       }); // end map on load event
 
-      map.on("load", function() {
+      map.on("load", function () {
         map.setPaintProperty("lakes-7oy7ga", "fill-opacity", 0);
         map.setPaintProperty("americas-mask2-c5phmk", "fill-opacity", 1);
       });
@@ -976,7 +998,7 @@ export default {
             if (timeout) {
               clearTimeout(timeout);
             }
-            timeout = setTimeout(function() {
+            timeout = setTimeout(function () {
               var width2, height2;
 
               mapcanvas.style.display = "initial";
@@ -1051,7 +1073,7 @@ export default {
       // Map properties - fade in countries and country lines
       this.fadeOpacity("mapCountryLineOpacity", "in", 10);
       //this.mapCountryLineOpacity = 1;
-      setTimeout(function() {
+      setTimeout(function () {
         self.mapCountryLabels = true;
       }, 10);
 
@@ -1067,7 +1089,7 @@ export default {
       this.activeContentStep = this.activeContentStep - 1;
     },
   },
-  mounted: function() {
+  mounted: function () {
     this.createMap();
     this.loadFlowLayers();
   },
@@ -1305,12 +1327,13 @@ p {
   color: white;
   text-align: left;
   margin: 10px 10px;
+  font-size: 15px;
 }
 h2 {
-  font-size: 24px;
+  font-size: 20px;
   margin: 10px 10px 0px;
   color: #fff;
-  padding: 3px 5px;
+  padding: 2px 5px;
   display: inline-block;
   background: #fc47dc;
   text-align: left;
@@ -1338,17 +1361,53 @@ h2 {
 
 #legend {
   position: absolute;
-  bottom: 10px;
+  bottom: 30px;
   right: 10px;
-  width: 200px;
-  height: 200px;
+  width: 140px;
   background: #fff;
   z-index: 9999999;
   color: black;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 10px 5px 5px;
+  font-size: 13px;
 }
 
-.small {
+.legend-item {
+  margin-bottom: 10px;
+  text-align: left;
 }
+
+#legend-inline {
+  width: 100%;
+}
+.legend-item-inline {
+  display: inline-block;
+  font-size: 13px;
+  margin: 20px 0px 0px 5px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin: 0px 5px;
+  float: left;
+  border-radius: 20px;
+}
+.legend-text {
+  float: left;
+}
+
+/* .legend-color {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: 0px 5px;
+  float: left;
+  border-radius: 20px;
+} */
 
 .hide {
   display: none !important;
@@ -1434,7 +1493,7 @@ div.vue-dat-gui .group {
   position: absolute;
   left: 10px;
   bottom: 10px;
-  width: 340px;
+  width: 300px;
   max-height: 360px;
   /* height: 90vh; */
   border: 5px solid #000;
@@ -1445,12 +1504,12 @@ div.vue-dat-gui .group {
 #viz-meta h1 {
   font-family: "Open Sans", sans-serif;
   text-align: left;
-  font-size: 40px;
+  font-size: 36px;
   line-height: 1em;
   text-transform: uppercase;
   font-weight: 800;
   font-style: italic;
-  padding: 10px;
+  padding: 5px 10px;
   background: #fcfa47;
   color: #000;
   margin: 0;
