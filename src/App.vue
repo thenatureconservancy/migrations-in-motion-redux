@@ -122,13 +122,13 @@
               :step="1"
               label="Max Particle Age"
             />
-            <dat-number
+            <!-- <dat-number
               v-model="birdsActive.PARTICLE_LINE_WIDTH"
               :min="0"
               :max="6"
               :step="0.1"
               label="Particle Line Width"
-            />
+            /> -->
             <dat-number
               v-model="birdsActive.PARTICLE_MULTIPLIER"
               :min="0"
@@ -191,13 +191,13 @@
               :step="1"
               label="Max Particle Age"
             />
-            <dat-number
+            <!-- <dat-number
               v-model="mammalsActive.PARTICLE_LINE_WIDTH"
               :min="0"
               :max="6"
               :step="0.1"
               label="Particle Line Width"
-            />
+            /> -->
             <dat-number
               v-model="mammalsActive.PARTICLE_MULTIPLIER"
               :min="0"
@@ -260,13 +260,13 @@
               :step="1"
               label="Max Particle Age"
             />
-            <dat-number
+            <!-- <dat-number
               v-model="amphibsActive.PARTICLE_LINE_WIDTH"
               :min="0"
               :max="6"
               :step="0.1"
               label="Particle Line Width"
-            />
+            /> -->
             <dat-number
               v-model="amphibsActive.PARTICLE_MULTIPLIER"
               :min="0"
@@ -426,40 +426,40 @@ export default {
       titleFontSize: 75,
       zoomWidth: {
         default: 1.5,
-        z2: 1.5,
-        z3: 1.3,
-        z4: 1,
+        z2: 1.8,
+        z3: 1.5,
+        z4: 1.5,
         z5: 0.7,
-        z6: 0.6,
-        z7: 0.2,
+        z6: 0.7,
+        z7: 0.5,
       },
       compositeOptions: [
         // { name: "source-over", value: "source-over" },
         // { name: "source-atop", value: "source-atop" },
-        { name: "source-in", value: "source-in" },
+        // { name: "source-in", value: "source-in" },
         // { name: "source-out", value: "source-out" },
         { name: "destination-over", value: "destination-over" },
         { name: "destination-atop", value: "destination-atop" },
         { name: "destination-in", value: "destination-in" },
         { name: "destination-out", value: "destination-out" },
-        { name: "lighter", value: "lighter" },
-        { name: "copy", value: "copy" },
+        // { name: "lighter", value: "lighter" },
+        // { name: "copy", value: "copy" },
         // { name: "xor", value: "xor" },
         { name: "multiply", value: "multiply" },
-        { name: "screen", value: "screen" },
-        { name: "overlay", value: "overlay" },
-        { name: "darken", value: "darken" },
-        { name: "lighten", value: "lighten" },
-        { name: "color-dodge", value: "color-dodge" },
-        { name: "color-burn", value: "color-burn" },
-        { name: "hard-light", value: "hard-light" },
-        { name: "soft-light", value: "soft-light" },
-        { name: "difference", value: "difference" },
-        { name: "exclusion", value: "exclusion" },
+        // { name: "screen", value: "screen" },
+        // { name: "overlay", value: "overlay" },
+        // { name: "darken", value: "darken" },
+        // { name: "lighten", value: "lighten" },
+        // { name: "color-dodge", value: "color-dodge" },
+        // { name: "color-burn", value: "color-burn" },
+        // { name: "hard-light", value: "hard-light" },
+        // { name: "soft-light", value: "soft-light" },
+        // { name: "difference", value: "difference" },
+        // { name: "exclusion", value: "exclusion" },
         { name: "hue", value: "hue" },
-        { name: "saturation", value: "saturation" },
-        { name: "color", value: "color" },
-        { name: "luminosity", value: "luminosity" },
+        // { name: "saturation", value: "saturation" },
+        // { name: "color", value: "color" },
+        // { name: "luminosity", value: "luminosity" },
       ],
       compositeSelected: "destination-in",
       default: {
@@ -629,7 +629,7 @@ export default {
             INTENSITY_SCALE_STEP: 10, // step size of particle intensity color scale
             MAX_WIND_INTENSITY: 40, // wind velocity at which particle intensity is maximum (m/s)
             MAX_PARTICLE_AGE: 100, // higher = flow things out and gets wirey. 50
-            PARTICLE_LINE_WIDTH: 0.7, // line width of a drawn particle 1.5
+            PARTICLE_LINE_WIDTH: 1.5, // line width of a drawn particle 1.5
             PARTICLE_MULTIPLIER: 0.3, // particle count scalar (completely arbitrary--this values looks nice) 500
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
@@ -644,7 +644,7 @@ export default {
             INTENSITY_SCALE_STEP: 10, // step size of particle intensity color scale
             MAX_WIND_INTENSITY: 40, // wind velocity at which particle intensity is maximum (m/s)
             MAX_PARTICLE_AGE: 100, // higher = flow things out and gets wirey. 50
-            PARTICLE_LINE_WIDTH: 0.7, // line width of a drawn particle 1.5
+            PARTICLE_LINE_WIDTH: 1.5, // line width of a drawn particle 1.5
             PARTICLE_MULTIPLIER: 0.3, // particle count scalar (completely arbitrary--this values looks nice) 500
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
@@ -659,7 +659,7 @@ export default {
             INTENSITY_SCALE_STEP: 10, // step size of particle intensity color scale
             MAX_WIND_INTENSITY: 40, // wind velocity at which particle intensity is maximum (m/s)
             MAX_PARTICLE_AGE: 100, // higher = flow things out and gets wirey. 50
-            PARTICLE_LINE_WIDTH: 0.7, // line width of a drawn particle 1.5
+            PARTICLE_LINE_WIDTH: 1.5, // line width of a drawn particle 1.5
             PARTICLE_MULTIPLIER: 0.3, // particle count scalar (completely arbitrary--this values looks nice) 500
             FRAME_RATE: 60, // desired milliseconds per frame
             NULL_WIND_VECTOR: [NaN, NaN, null], // singleton for no wind in the form: [u, v, magnitude]
@@ -933,8 +933,8 @@ export default {
     },
     calculateParticleWidth() {
       var zoomLevel = this.map.getZoom();
-      var particleWidth = 0.9;
       var self = this;
+      var particleWidth = 1.5;
 
       if (zoomLevel < 2) {
         particleWidth = self.zoomWidth.z2; // 0.5
