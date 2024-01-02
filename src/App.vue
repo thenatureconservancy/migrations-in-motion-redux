@@ -429,9 +429,9 @@ export default {
         z2: 1.8,
         z3: 1.5,
         z4: 1.5,
-        z5: 0.7,
-        z6: 0.7,
-        z7: 0.5,
+        z5: 1,
+        z6: 1,
+        z7: 0.8,
       },
       compositeOptions: [
         // { name: "source-over", value: "source-over" },
@@ -899,14 +899,14 @@ export default {
         center: [-78, 19], // NA-SA
         zoom: 3, // starting zoom, // NA-SA
         attributionControl: true,
-        hash: true,
+        hash: false,
       });
 
       // disable map rotation using right click + drag
       map.dragRotate.disable();
-
       // disable map rotation using touch rotation gesture
       map.touchZoomRotate.disableRotation();
+      map.keyboard.disableRotation();
 
       map.addControl(
         new mapboxgl.NavigationControl({
@@ -1313,6 +1313,7 @@ body {
   padding: 0px;
   margin: 0px;
   font-family: "Open Sans", sans-serif;
+  user-select: none;
 }
 
 #app {
@@ -1332,10 +1333,10 @@ p {
   color: white;
   text-align: left;
   margin: 10px 10px;
-  font-size: 15px;
+  font-size: 14px;
 }
 h2 {
-  font-size: 20px;
+  font-size: 18px;
   margin: 10px 10px 0px;
   color: #fff;
   padding: 2px 5px;
@@ -1390,7 +1391,7 @@ h2 {
 .legend-item-inline {
   display: inline-block;
   font-size: 13px;
-  margin: 20px 0px 0px 5px;
+  margin: 15px 0px 0px 5px;
 }
 
 .legend-color {
@@ -1509,7 +1510,7 @@ div.vue-dat-gui .group {
 #viz-meta h1 {
   font-family: "Open Sans", sans-serif;
   text-align: left;
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1em;
   text-transform: uppercase;
   font-weight: 800;
@@ -1616,8 +1617,8 @@ a:hover {
   }
 }
 .tnc-logo {
-  width: 200px;
+  width: 150px;
   height: auto;
-  margin: 20px 0;
+  margin: 15px 0 10px;
 }
 </style>
