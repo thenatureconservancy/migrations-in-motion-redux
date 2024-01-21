@@ -988,8 +988,13 @@ export default {
 
           function resetWind(map, windy, divName, activeFlowConfig) {
             var mapcanvas = document.getElementById(divName);
+            var appElement = document.getElementById("map");
             var obj = getEventObject(map);
             var { north, south, west, east, width, height } = obj;
+            console.log("map object", obj);
+            console.log("window", window.screen.width, window.screen.height);
+            console.log("inner", window.innerWidth, window.innerHeight);
+            console.log("map stuff", appElement.getBoundingClientRect());
 
             try {
               mapcanvas.style.display = "none";
@@ -1007,35 +1012,88 @@ export default {
               var width2, height2;
 
               mapcanvas.style.display = "initial";
-              mapcanvas.width = width; // /2
-              mapcanvas.height = height;
+              mapcanvas.width = obj.width; // /2
+              mapcanvas.height = obj.height;
 
-              // If retina display, double width and height
-              if (window.devicePixelRatio === 1) {
-                width2 = width;
-                height2 = height;
-              } else {
-                width2 = width / 2;
-                height2 = height / 2;
-              }
+              // mapcanvas.width = "100vw";
+              // mapcanvas.height = "100vh";
+              // mapcanvas.width = 1185;
+              // mapcanvas.height = 501;
+              // mapcanvas.width = 1078;
+              // mapcanvas.height = 456;
+
+              console.log("DEVICE PIXEL RATIO", window.devicePixelRatio);
+              const devicePixelRatio = window.devicePixelRatio;
+              width2 = width / devicePixelRatio;
+              height2 = height / devicePixelRatio;
+
+              // width2 = width;
+              // height2 = height;
+
+              // width2 = 1078;
+              // height2 = 456;
+              // width2 = width / 2;
+              // height2 = height / 2;
+
+              console.log("map", map);
+              //console.log("canvas", map.get_canvas());
+              console.log("width2", width2);
+              console.log("height2", height2);
+              console.log("event object", obj);
+
+              // width2 = width;
+              // height2 = height;
+
+              //If retina display, double width and height
+              // width2 = width;
+              // height2 = height;
+              // if (window.devicePixelRatio === 1) {
+              //   width2 = width;
+              //   height2 = height;
+              // } else {
+              //   width2 = width / 2;
+              //   height2 = height / 2;
+              // }
               windy.start(
                 [
                   [0, 0],
                   [width2, height2],
+                  // [screen.width, screen.height],
                 ],
                 width2,
                 height2,
+                // screen.width,
+                // screen.height,
                 [
                   [west, south],
                   [east, north],
                 ],
                 activeFlowConfig
               );
+
+              // windy.start(
+              //   [
+              //     [0, 0],
+              //     [obj.width, obj.height],
+              //     // [screen.width, screen.height],
+              //   ],
+              //   obj.width,
+              //   obj.height,
+              //   // screen.width,
+              //   // screen.height,
+              //   [
+              //     [west, south],
+              //     [east, north],
+              //   ],
+              //   activeFlowConfig
+              // );
             }, 50);
           }
 
           function getEventObject(map) {
             var canvas = map.getCanvas();
+            console.log("canvas", canvas);
+            // canvas.style.transform = "scale(2,2)";
             var dimensions = map.getBounds();
 
             var result = {
@@ -1308,12 +1366,20 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,800&display=swap");
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: #000;
   padding: 0px;
   margin: 0px;
   font-family: "Open Sans", sans-serif;
   user-select: none;
+  resize: none !important;
+  width: 100%;
+  height: 100%;
 }
 
 #app {
@@ -1327,7 +1393,7 @@ body {
   color: white;
   margin-top: 0px;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 p {
   color: white;
@@ -1359,6 +1425,7 @@ h2 {
   width: 100%;
   height: 100vh;
   outline: none !important;
+  /* transform: translate3d(0px, 128px, 0px); */
   /* margin: 20px 0px 20px 0px;
   border: 10px solid white;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); */
@@ -1537,7 +1604,7 @@ span.step {
   top: 0px;
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .wind-map-container {

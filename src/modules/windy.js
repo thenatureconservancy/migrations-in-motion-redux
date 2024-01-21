@@ -39,7 +39,7 @@ export function Windy(params, config) {
   //var H = Math.pow(10, -5.2);
 
   // interpolation for vectors like wind (u,v,m)
-  var bilinearInterpolateVector = function(x, y, g00, g10, g01, g11) {
+  var bilinearInterpolateVector = function (x, y, g00, g10, g01, g11) {
     var rx = 1 - x;
     var ry = 1 - y;
     var a = rx * ry,
@@ -51,35 +51,35 @@ export function Windy(params, config) {
     return [u, v, Math.sqrt(u * u + v * v)];
   };
 
-  var createWindBuilder = function(uComp, vComp) {
+  var createWindBuilder = function (uComp, vComp) {
     var uData = uComp.data,
       vData = vComp.data;
     return {
       header: uComp.header,
       //recipe: recipeFor("wind-" + uComp.header.surface1Value),
-      data: function(i) {
+      data: function (i) {
         return [uData[i], vData[i]];
       },
       interpolate: bilinearInterpolateVector,
     };
   };
 
-  var createBuilder = function(data) {
+  var createBuilder = function (data) {
     var uComp = null,
       vComp = null;
     //var scalar = null;
 
-    data.forEach(function(record) {
+    data.forEach(function (record) {
       // let scalar = null;
       switch (
         record.header.parameterCategory +
-        ',' +
+        "," +
         record.header.parameterNumber
       ) {
-        case '2,2':
+        case "2,2":
           uComp = record;
           break;
-        case '2,3':
+        case "2,3":
           vComp = record;
           break;
         // default:
@@ -90,7 +90,7 @@ export function Windy(params, config) {
     return createWindBuilder(uComp, vComp);
   };
 
-  var buildGrid = function(data, callback) {
+  var buildGrid = function (data, callback) {
     var builder = createBuilder(data);
 
     var header = builder.header;
@@ -153,7 +153,7 @@ export function Windy(params, config) {
   /**
    * @returns {Boolean} true if the specified value is not null and not undefined.
    */
-  var isValue = function(x) {
+  var isValue = function (x) {
     return x !== null && x !== undefined;
   };
 
@@ -161,7 +161,7 @@ export function Windy(params, config) {
    * @returns {Number} returns remainder of floored division, i.e., floor(a / n). Useful for consistent modulo
    *          of negative numbers. See http://en.wikipedia.org/wiki/Modulo_operation.
    */
-  var floorMod = function(a, n) {
+  var floorMod = function (a, n) {
     return a - n * Math.floor(a / n);
   };
 
@@ -186,7 +186,7 @@ export function Windy(params, config) {
    * Calculate distortion of the wind vector caused by the shape of the projection at point (x, y). The wind
    * vector is modified in place and returned by this function.
    */
-  var distort = function(projection, λ, φ, x, y, scale, wind, windy) {
+  var distort = function (projection, λ, φ, x, y, scale, wind, windy) {
     var u = wind[0] * scale;
     var v = wind[1] * scale;
     var d = distortion(projection, λ, φ, x, y, windy);
@@ -197,7 +197,7 @@ export function Windy(params, config) {
     return wind;
   };
 
-  var distortion = function(projection, λ, φ, x, y, windy) {
+  var distortion = function (projection, λ, φ, x, y, windy) {
     //var τ = 2 * Math.PI;
     var H = Math.pow(10, -5.2);
     var hλ = λ < 0 ? H : -H;
@@ -217,7 +217,7 @@ export function Windy(params, config) {
     ];
   };
 
-  var createField = function(columns, bounds, callback) {
+  var createField = function (columns, bounds, callback) {
     /**
      * @returns {Array} wind vector [u, v, magnitude] at the point (x, y), or [NaN, NaN, null] if wind
      *          is undefined at that point.
@@ -229,11 +229,11 @@ export function Windy(params, config) {
 
     // Frees the massive "columns" array for GC. Without this, the array is leaked (in Chrome) each time a new
     // field is interpolated because the field closure's context is leaked, for reasons that defy explanation.
-    field.release = function() {
+    field.release = function () {
       columns = [];
     };
 
-    field.randomize = function(o) {
+    field.randomize = function (o) {
       // UNDONE: this method is terrible
       var x, y;
       var safetyNet = 0;
@@ -251,7 +251,7 @@ export function Windy(params, config) {
     callback(bounds, field);
   };
 
-  var buildBounds = function(bounds, width, height) {
+  var buildBounds = function (bounds, width, height) {
     var upperLeft = bounds[0];
     var lowerRight = bounds[1];
     var x = Math.round(upperLeft[0]); //Math.max(Math.floor(upperLeft[0], 0), 0);
@@ -268,15 +268,15 @@ export function Windy(params, config) {
     };
   };
 
-  var deg2rad = function(deg) {
+  var deg2rad = function (deg) {
     return (deg / 180) * Math.PI;
   };
 
-  var rad2deg = function(ang) {
+  var rad2deg = function (ang) {
     return ang / (Math.PI / 180.0);
   };
 
-  var invert = function(x, y, windy) {
+  var invert = function (x, y, windy) {
     var mapLonDelta = windy.east - windy.west;
     var worldMapRadius =
       ((windy.width / rad2deg(mapLonDelta)) * 360) / (2 * Math.PI);
@@ -291,11 +291,11 @@ export function Windy(params, config) {
     return [lon, lat];
   };
 
-  var mercY = function(lat) {
+  var mercY = function (lat) {
     return Math.log(Math.tan(lat / 2 + Math.PI / 4));
   };
 
-  var project = function(lat, lon, windy) {
+  var project = function (lat, lon, windy) {
     // both in radians, use deg2rad if neccessary
     var ymin = mercY(windy.south);
     var ymax = mercY(windy.north);
@@ -308,7 +308,7 @@ export function Windy(params, config) {
     return [x, y2];
   };
 
-  var interpolateField = function(grid, bounds, extent, callback) {
+  var interpolateField = function (grid, bounds, extent, callback) {
     var projection = {};
     var velocityScale = VELOCITY_SCALE;
 
@@ -365,7 +365,7 @@ export function Windy(params, config) {
     })();
   };
 
-  var animate = function(bounds, field) {
+  var animate = function (bounds, field) {
     function windIntensityColorScale(step, maxWind) {
       var result = COLOR_RAMP;
       // result.push['#000000'];
@@ -392,7 +392,7 @@ export function Windy(params, config) {
       //   '#74add1',
       //   '#4575b4',
       // ];
-      result.indexFor = function(m) {
+      result.indexFor = function (m) {
         // map wind speed to a style
         return Math.floor(
           (Math.min(m, maxWind) / maxWind) * (result.length - 1)
@@ -406,7 +406,7 @@ export function Windy(params, config) {
       INTENSITY_SCALE_STEP,
       MAX_WIND_INTENSITY
     );
-    var buckets = colorStyles.map(function() {
+    var buckets = colorStyles.map(function () {
       return [];
     });
 
@@ -432,10 +432,10 @@ export function Windy(params, config) {
     }
 
     function evolve() {
-      buckets.forEach(function(bucket) {
+      buckets.forEach(function (bucket) {
         bucket.length = 0;
       });
-      particles.forEach(function(particle) {
+      particles.forEach(function (particle) {
         if (particle.age > MAX_PARTICLE_AGE) {
           field.randomize(particle).age = 0;
         }
@@ -464,8 +464,8 @@ export function Windy(params, config) {
     }
 
     // GLOBAL ALPHA MOVED TO PARAMETER
-    var g = params.canvas.getContext('2d', {
-      powerPreference: 'high-performance',
+    var g = params.canvas.getContext("2d", {
+      powerPreference: "high-performance",
       // desynchronized: true,
     });
     g.lineWidth = PARTICLE_LINE_WIDTH;
@@ -485,11 +485,11 @@ export function Windy(params, config) {
       g.globalAlpha = COLOR_ALPHA;
 
       // Draw new particle trails.
-      buckets.forEach(function(bucket, i) {
+      buckets.forEach(function (bucket, i) {
         if (bucket.length > 0) {
           g.beginPath();
           g.strokeStyle = colorStyles[i];
-          bucket.forEach(function(particle) {
+          bucket.forEach(function (particle) {
             g.moveTo(particle.x, particle.y);
             g.lineTo(particle.xt, particle.yt);
             particle.x = particle.xt;
@@ -502,7 +502,7 @@ export function Windy(params, config) {
 
     (function frame() {
       try {
-        windy.timer = setTimeout(function() {
+        windy.timer = setTimeout(function () {
           requestAnimationFrame(frame);
           evolve();
           draw();
@@ -514,7 +514,7 @@ export function Windy(params, config) {
   };
 
   // THIS HAS finalParams PARAMETER TO OVERRIDE LINE WIDTH GLOBALLY
-  var start = function(bounds, width, height, extent, activeFlowConfig) {
+  var start = function (bounds, width, height, extent, activeFlowConfig) {
     if (activeFlowConfig) {
       PARTICLE_LINE_WIDTH = activeFlowConfig.particleLineWidth;
       COLOR_RAMP = [activeFlowConfig.COLOR_RAMP];
@@ -532,6 +532,11 @@ export function Windy(params, config) {
     }
 
     //console.log('AFC', activeFlowConfig);
+    console.log("width: " + width + " height: " + height);
+    // width = 1185;
+    // height = 501;
+    // width = 1078;
+    // height = 456;
     var mapBounds = {
       south: deg2rad(extent[0][1]),
       north: deg2rad(extent[1][1]),
@@ -544,13 +549,13 @@ export function Windy(params, config) {
     stop();
 
     // build grid
-    buildGrid(params.data, function(grid) {
+    buildGrid(params.data, function (grid) {
       // interpolateField
       interpolateField(
         grid,
         buildBounds(bounds, width, height),
         mapBounds,
-        function(bounds, field) {
+        function (bounds, field) {
           // animate the canvas with random points
           windy.field = field;
           animate(bounds, field);
@@ -559,7 +564,7 @@ export function Windy(params, config) {
     });
   };
 
-  var stop = function() {
+  var stop = function () {
     if (windy.field) windy.field.release();
     if (windy.timer) clearTimeout(windy.timer);
   };
@@ -574,14 +579,14 @@ export function Windy(params, config) {
 }
 
 //shim layer with setTimeout fallback
-window.requestAnimationFrame = (function() {
+window.requestAnimationFrame = (function () {
   return (
     window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     window.oRequestAnimationFrame ||
     window.msRequestAnimationFrame ||
-    function(callback) {
+    function (callback) {
       window.setTimeout(callback, 1000 / 20);
     }
   );
