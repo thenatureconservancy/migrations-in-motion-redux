@@ -35,7 +35,7 @@ export function Windy(params, config) {
   var COLOR_ALPHA = config.COLOR_ALPHA;
   // var COLOR_ALPHA = config.COLOR_ALPHA;
 
-  var τ = 2 * Math.PI;
+  //var τ = 2 * Math.PI;
   //var H = Math.pow(10, -5.2);
 
   // interpolation for vectors like wind (u,v,m)
@@ -198,7 +198,7 @@ export function Windy(params, config) {
   };
 
   var distortion = function (projection, λ, φ, x, y, windy) {
-    //var τ = 2 * Math.PI;
+    var τ = 2 * Math.PI;
     var H = Math.pow(10, -5.2);
     var hλ = λ < 0 ? H : -H;
     var hφ = φ < 0 ? H : -H;
@@ -262,6 +262,7 @@ export function Windy(params, config) {
       x: x,
       y: y,
       xMax: width,
+      // xMax: xMax,
       yMax: yMax,
       width: width,
       height: height,
@@ -290,6 +291,12 @@ export function Windy(params, config) {
     var lon = rad2deg(windy.west) + (x / windy.width) * rad2deg(mapLonDelta);
     return [lon, lat];
   };
+
+  // from new windy
+  // var invert = function (x, y, windy) {
+  //   var latlon = params.map.unproject({ x, y });
+  //   return [latlon.lng, latlon.lat];
+  // };
 
   var mercY = function (lat) {
     return Math.log(Math.tan(lat / 2 + Math.PI / 4));
@@ -357,7 +364,7 @@ export function Windy(params, config) {
         x += 2;
         if (Date.now() - start > 1000) {
           //MAX_TASK_TIME) {
-          setTimeout(batchInterpolate, 0);
+          setTimeout(batchInterpolate, 25);
           return;
         }
       }
@@ -368,30 +375,7 @@ export function Windy(params, config) {
   var animate = function (bounds, field) {
     function windIntensityColorScale(step, maxWind) {
       var result = COLOR_RAMP;
-      // result.push['#000000'];
-      // result.push['#ffffff'];
-      // result = [
-      //   '#d73027',
-      //   '#f46d43',
-      //   '#fdae61',
-      //   '#fee090',
-      //   '#ffffbf',
-      //   '#e0f3f8',
-      //   '#abd9e9',
-      //   '#74add1',
-      //   '#4575b4',
-      // ];
-      // result = [
-      //   '#fc47dc',
-      //   '#f46d43',
-      //   '#fdae61',
-      //   '#fee090',
-      //   '#ffffbf',
-      //   '#e0f3f8',
-      //   '#abd9e9',
-      //   '#74add1',
-      //   '#4575b4',
-      // ];
+
       result.indexFor = function (m) {
         // map wind speed to a style
         return Math.floor(
@@ -468,16 +452,12 @@ export function Windy(params, config) {
       powerPreference: "high-performance",
       // desynchronized: true,
     });
-    g.lineWidth = PARTICLE_LINE_WIDTH;
 
+    g.lineWidth = PARTICLE_LINE_WIDTH;
     g.fillStyle = FADE_FILL_STYLE;
     g.globalAlpha = COLOR_ALPHA;
 
     function draw() {
-      // Fade existing particle trails.
-      // WINDY-LEAFLET DOESN'T HAVE PREV = LIGHTER VARIABLE
-      // GLOBAL ALPHA SET IN CONFIG IN WINDY-LEAFLET
-      //var prev = "lighter";
       var prev = g.globalCompositeOperation;
       g.globalCompositeOperation = COMPOSITE_OPERATION;
       g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
@@ -562,11 +542,17 @@ export function Windy(params, config) {
         }
       );
     });
+
+    // if (params.canvas) {
+    //   params.canvas.style.display = "initial";
+    // }
   };
 
   var stop = function () {
     if (windy.field) windy.field.release();
     if (windy.timer) clearTimeout(windy.timer);
+    // const context = params.canvas.getContext("2d");
+    // context.clearRect(0, 0, 3000, 3000);
   };
 
   var windy = {

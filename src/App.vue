@@ -915,13 +915,13 @@ export default {
         "top-left"
       );
 
-      map.on("load", () => {
-        console.log("map loaded");
-      }); // end map on load event
+      // map.on("load", () => {
+      //   console.log("map loaded");
+      // }); // end map on load event
 
-      map.once("idle", () => {
-        console.log("map once idle");
-      }); // end map on load event
+      // map.once("idle", () => {
+      //   console.log("map once idle");
+      // }); // end map on load event
 
       map.on("load", function () {
         map.setPaintProperty("lakes-7oy7ga", "fill-opacity", 0);
@@ -929,6 +929,7 @@ export default {
       });
 
       self.map = map;
+      //console.log("map", map);
       return map;
     },
     calculateParticleWidth() {
@@ -949,10 +950,21 @@ export default {
       } else {
         particleWidth = self.zoomWidth.z7;
       }
-      console.log("particle width", particleWidth);
+      //console.log("particle width", particleWidth);
       return particleWidth;
     },
     buildFlow(map, divName, config, windyContainer, cssClassArray) {
+      // function createHiPPICanvas(width, height) {
+      //   const ratio = window.devicePixelRatio;
+      //   const canvas = document.createElement("canvas");
+      //   canvas.width = width * ratio;
+      //   canvas.height = height * ratio;
+      //   canvas.style.width = width + "px";
+      //   canvas.style.height = height + "px";
+      //   canvas.getContext("2d").scale(ratio, ratio);
+      //   return canvas;
+      // }
+
       //var self = this;
       // GET WIND DATA
       fetch(config.spData)
@@ -963,6 +975,7 @@ export default {
           var windy, timeout;
           var parentNode = document.getElementById("windContainer" + divName);
           var canvasNode = document.createElement("canvas");
+          //var canvasNode = createHiPPICanvas(1078, 456);
           canvasNode.id = divName;
           canvasNode.className = "flowLayer";
           canvasNode.classList.add(...cssClassArray);
@@ -986,15 +999,36 @@ export default {
             resetWind(map, windy, divName, this[divName + windyContainer]);
           });
 
+          // function roundToNearestEven(num) {
+          //   // Round the number to the nearest integer
+          //   const rounded = Math.round(num);
+
+          //   // Check if the rounded number is odd
+          //   if (rounded % 2 !== 0) {
+          //     // If it's odd, adjust it to be even
+          //     if (num > rounded) {
+          //       return rounded + 1; // Round up
+          //     } else {
+          //       return rounded - 1; // Round down
+          //     }
+          //   }
+
+          //   return rounded; // Already even
+          // }
+
           function resetWind(map, windy, divName, activeFlowConfig) {
             var mapcanvas = document.getElementById(divName);
-            var appElement = document.getElementById("map");
+            //var appElement = document.getElementById("map");
             var obj = getEventObject(map);
-            var { north, south, west, east, width, height } = obj;
-            console.log("map object", obj);
-            console.log("window", window.screen.width, window.screen.height);
-            console.log("inner", window.innerWidth, window.innerHeight);
-            console.log("map stuff", appElement.getBoundingClientRect());
+            // var { north, south, west, east, width, height } = obj;
+            var { north, south, west, east } = obj;
+            // console.log("map object", obj);
+            // console.log("window", window.screen.width, window.screen.height);
+            // console.log("inner", window.innerWidth, window.innerHeight);
+            //console.log("map stuff", appElement.getBoundingClientRect());
+
+            var context = mapcanvas.getContext("2d");
+            context.scale(devicePixelRatio, devicePixelRatio);
 
             try {
               mapcanvas.style.display = "none";
@@ -1009,7 +1043,7 @@ export default {
               clearTimeout(timeout);
             }
             timeout = setTimeout(function () {
-              var width2, height2;
+              //var width2, height2;
 
               mapcanvas.style.display = "initial";
               mapcanvas.width = obj.width; // /2
@@ -1017,51 +1051,44 @@ export default {
 
               // mapcanvas.width = "100vw";
               // mapcanvas.height = "100vh";
-              // mapcanvas.width = 1185;
-              // mapcanvas.height = 501;
-              // mapcanvas.width = 1078;
-              // mapcanvas.height = 456;
 
-              console.log("DEVICE PIXEL RATIO", window.devicePixelRatio);
-              const devicePixelRatio = window.devicePixelRatio;
-              width2 = width / devicePixelRatio;
-              height2 = height / devicePixelRatio;
+              //console.log("DEVICE PIXEL RATIO", window.devicePixelRatio);
+              //const devicePixelRatio = window.devicePixelRatio;
+              // width2 = Math.floor(width / devicePixelRatio);
+              // height2 = Math.floor(height / devicePixelRatio);
 
-              // width2 = width;
-              // height2 = height;
+              var container = map.getContainer();
+              const dimensions = {
+                x: container.clientWidth,
+                y: container.clientHeight,
+              };
 
-              // width2 = 1078;
-              // height2 = 456;
-              // width2 = width / 2;
-              // height2 = height / 2;
+              // width2 = window.innerWidth * window.devicePixelRatio;
+              // height2 = window.innerHeight * window.devicePixelRatio;
 
-              console.log("map", map);
-              //console.log("canvas", map.get_canvas());
-              console.log("width2", width2);
-              console.log("height2", height2);
-              console.log("event object", obj);
+              // width2 = window.innerWidth * window.devicePixelRatio;
+              // height2 = window.innerHeight * window.devicePixelRatio;
 
-              // width2 = width;
-              // height2 = height;
+              // console.log("map", map);
+              // //console.log("canvas", map.get_canvas());
+              // console.log("width2", width, width2);
+              // console.log("height2", height, height2);
+              // console.log("dimensions", dimensions.x, dimensions.y);
+              // console.log("mapbox height", map._canvas.height);
+              // console.log("mapbox width", map._canvas.width);
+              // console.log("event object", obj);
 
-              //If retina display, double width and height
-              // width2 = width;
-              // height2 = height;
-              // if (window.devicePixelRatio === 1) {
-              //   width2 = width;
-              //   height2 = height;
-              // } else {
-              //   width2 = width / 2;
-              //   height2 = height / 2;
-              // }
               windy.start(
                 [
                   [0, 0],
-                  [width2, height2],
+                  // [width2, height2],
+                  [dimensions.x, dimensions.y],
                   // [screen.width, screen.height],
                 ],
-                width2,
-                height2,
+                // width2,
+                // height2,
+                dimensions.x,
+                dimensions.y,
                 // screen.width,
                 // screen.height,
                 [
@@ -1092,8 +1119,9 @@ export default {
 
           function getEventObject(map) {
             var canvas = map.getCanvas();
-            console.log("canvas", canvas);
-            // canvas.style.transform = "scale(2,2)";
+            //console.log("canvas", canvas);
+
+            //canvas.scale(devicePixelRatio, devicePixelRatio);
             var dimensions = map.getBounds();
 
             var result = {
@@ -1159,13 +1187,22 @@ export default {
   watch: {
     mapCountryLabels: {
       handler() {
-        var labelState = this.mapCountryLabels;
-        let labelVisibility = labelState ? "visible" : "none";
-        this.map.setLayoutProperty(
-          "country-label-lg",
-          "visibility",
-          labelVisibility
-        );
+        this.map.on("load", () => {
+          var labelState = this.mapCountryLabels;
+          let labelVisibility = labelState ? "visible" : "none";
+          this.map.setLayoutProperty(
+            "country-label-lg",
+            "visibility",
+            labelVisibility
+          );
+        });
+        // var labelState = this.mapCountryLabels;
+        // let labelVisibility = labelState ? "visible" : "none";
+        // this.map.setLayoutProperty(
+        //   "country-label-lg",
+        //   "visibility",
+        //   labelVisibility
+        // );
       },
     },
     mapCityLabels: {
@@ -1369,6 +1406,7 @@ export default {
 html,
 body {
   height: 100%;
+  width: 100%;
 }
 
 body {
@@ -1392,8 +1430,10 @@ body {
   text-align: center;
   color: white;
   margin-top: 0px;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 p {
   color: white;
@@ -1419,11 +1459,12 @@ h2 {
 } */
 
 #map {
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 0; */
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
   outline: none !important;
   /* transform: translate3d(0px, 128px, 0px); */
   /* margin: 20px 0px 20px 0px;
@@ -1612,18 +1653,31 @@ span.step {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  /*  height: 900px;*/
-  height: 100%;
+  width: 100vh;
+  height: 100vh;
   z-index: 9999;
   pointer-events: none;
+  object-fit: contain;
 }
 
-.flowLayer {
+/* .flowLayer {
   position: absolute;
   top: 0;
   left: 0;
-}
+  object-fit: contain; 
+  transform: scale(1);
+  transform-origin: top left;
+} */
+
+/* .flowLayer {
+  opacity: 1;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  pointer-events: none;
+} */
 
 canvas {
   outline: none !important;

@@ -10,7 +10,7 @@
   "dependencies": {
     "@cyrilf/vue-dat-gui": "^0.3.0",
     "core-js": "^3.6.5",
-    "mapbox-gl": "^2.6.1",
+    "mapbox-gl": "^1.13.3",
     "vue": "^2.6.11",
     "vue-carousel": "^0.18.0",
     "vue-shortkey": "^3.1.7"
