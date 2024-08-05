@@ -299,12 +299,6 @@
       </div>
     </keep-alive>
 
-    <!-- 
-#fcfa47
-#47d4fc
-#fc47dc
-    -->
-
     <div id="viz-meta" v-if="showCaption">
       <h1>Migrations <br class="title-break" />In Motion</h1>
       <div id="legend-inline">
@@ -330,10 +324,7 @@
           <div class="legend-text">Amphibians</div>
         </div>
       </div>
-      <!-- <div v-html="activeContent"></div> -->
-      <!-- <div v-for="c in content" :key="c.step">
-        <div v-html="c.text"></div>
-      </div> -->
+
       <div>
         <!-- Overview -->
         <p>
@@ -870,33 +861,6 @@ export default {
           },
         },
       },
-      content: [
-        {
-          step: 1,
-          text: "<p>As climate change alters habitats and disrupts ecosystems, where will animals move to survive? And will human development prevent them from getting there?</p> <p>This map shows the average direction mammals, birds, and amphibians need to move to track hospitable climates as they shift across the landscape. &darr;</p>",
-        },
-        {
-          step: 2,
-          text: '<h2>How?</h2><p>Researchers from University of Washington and The Nature Conservancy modeled potential habitat for 2954 species using climate change projections and the climatic needs of each species.</p> <p>Using flow models from <a href="https://www.circuitscape.org/" target="_blank">electronic circuit theory</a>, they plotted movement routes for each species, connecting current habitats with their projected locations under climate change.</p>',
-        },
-        {
-          step: 3,
-          text: '<h2>What Can We Do?</h2> <p>There are a number of ways that conservationists and land managers can <a href="https://blog.nature.org/science/2016/06/29/species-on-the-move-mapping-barriers-for-wildlife-in-a-warming-world/?utm_source=cgs&utm_medium=alsoin&utm_campaign=migrations" target="_blank">re-build or maintain connectivity</a> to improve species’ ability to adapt to warmer temperatures. Removing fencing, adding wildlife overpasses (or underpasses) to major roadways, and better routing of infrastructure like pipelines and powerlines can all help re-connect areas fragmented by human development.</p>',
-        },
-        {
-          step: 4,
-          text: "<h2>So...</h2> <p><strong>Q: Does this mean 3000 species will move through my backyard because of climate change?</strong></p><p><strong>A:</strong> No, the researchers used coarse 50 km data, which is good for understanding the big picture view, but not good for understanding local patterns.</p>",
-        },
-        {
-          step: 5,
-          text: "<h2>Credits</h2><p>This map was created by <a href='mailto:dmajka@tnc.org' target='_blank'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This work would have not been possible without the <a href='https://blog.nature.org/science/2018/04/26/innovation-for-conservation-brad-mcrae-1966-2017/' target='_blank'>pioneering connectivity science of Brad McRae (1966-2017).</p>",
-        },
-
-        {
-          step: 7,
-          text: '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract" target="_blank">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
-        },
-      ],
       activeContentStep: 0,
     };
   },
@@ -1021,21 +985,12 @@ export default {
         "top-left"
       );
 
-      // map.on("load", () => {
-      //   console.log("map loaded");
-      // }); // end map on load event
-
-      // map.once("idle", () => {
-      //   console.log("map once idle");
-      // }); // end map on load event
-
       map.on("load", function () {
         map.setPaintProperty("lakes-7oy7ga", "fill-opacity", 0);
         map.setPaintProperty("americas-mask2-c5phmk", "fill-opacity", 1);
       });
 
       self.map = map;
-      //console.log("map", map);
       return map;
     },
     calculateParticleWidth() {
@@ -1060,17 +1015,6 @@ export default {
       return particleWidth;
     },
     buildFlow(map, divName, config, windyContainer, cssClassArray) {
-      // function createHiPPICanvas(width, height) {
-      //   const ratio = window.devicePixelRatio;
-      //   const canvas = document.createElement("canvas");
-      //   canvas.width = width * ratio;
-      //   canvas.height = height * ratio;
-      //   canvas.style.width = width + "px";
-      //   canvas.style.height = height + "px";
-      //   canvas.getContext("2d").scale(ratio, ratio);
-      //   return canvas;
-      // }
-
       //var self = this;
       // GET WIND DATA
       fetch(config.spData)
@@ -1105,33 +1049,12 @@ export default {
             resetWind(map, windy, divName, this[divName + windyContainer]);
           });
 
-          // function roundToNearestEven(num) {
-          //   // Round the number to the nearest integer
-          //   const rounded = Math.round(num);
-
-          //   // Check if the rounded number is odd
-          //   if (rounded % 2 !== 0) {
-          //     // If it's odd, adjust it to be even
-          //     if (num > rounded) {
-          //       return rounded + 1; // Round up
-          //     } else {
-          //       return rounded - 1; // Round down
-          //     }
-          //   }
-
-          //   return rounded; // Already even
-          // }
-
           function resetWind(map, windy, divName, activeFlowConfig) {
             var mapcanvas = document.getElementById(divName);
             //var appElement = document.getElementById("map");
             var obj = getEventObject(map);
             // var { north, south, west, east, width, height } = obj;
             var { north, south, west, east } = obj;
-            // console.log("map object", obj);
-            // console.log("window", window.screen.width, window.screen.height);
-            // console.log("inner", window.innerWidth, window.innerHeight);
-            //console.log("map stuff", appElement.getBoundingClientRect());
 
             var context = mapcanvas.getContext("2d");
             context.scale(devicePixelRatio, devicePixelRatio);
@@ -1155,34 +1078,11 @@ export default {
               mapcanvas.width = obj.width; // /2
               mapcanvas.height = obj.height;
 
-              // mapcanvas.width = "100vw";
-              // mapcanvas.height = "100vh";
-
-              //console.log("DEVICE PIXEL RATIO", window.devicePixelRatio);
-              //const devicePixelRatio = window.devicePixelRatio;
-              // width2 = Math.floor(width / devicePixelRatio);
-              // height2 = Math.floor(height / devicePixelRatio);
-
               var container = map.getContainer();
               const dimensions = {
                 x: container.clientWidth,
                 y: container.clientHeight,
               };
-
-              // width2 = window.innerWidth * window.devicePixelRatio;
-              // height2 = window.innerHeight * window.devicePixelRatio;
-
-              // width2 = window.innerWidth * window.devicePixelRatio;
-              // height2 = window.innerHeight * window.devicePixelRatio;
-
-              // console.log("map", map);
-              // //console.log("canvas", map.get_canvas());
-              // console.log("width2", width, width2);
-              // console.log("height2", height, height2);
-              // console.log("dimensions", dimensions.x, dimensions.y);
-              // console.log("mapbox height", map._canvas.height);
-              // console.log("mapbox width", map._canvas.width);
-              // console.log("event object", obj);
 
               windy.start(
                 [
@@ -1203,23 +1103,6 @@ export default {
                 ],
                 activeFlowConfig
               );
-
-              // windy.start(
-              //   [
-              //     [0, 0],
-              //     [obj.width, obj.height],
-              //     // [screen.width, screen.height],
-              //   ],
-              //   obj.width,
-              //   obj.height,
-              //   // screen.width,
-              //   // screen.height,
-              //   [
-              //     [west, south],
-              //     [east, north],
-              //   ],
-              //   activeFlowConfig
-              // );
             }, 50);
           }
 
@@ -1507,7 +1390,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,800&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;1,800&display=swap"); */
 
 html,
 body {
@@ -1613,7 +1496,6 @@ h2 {
   height: 16px;
   display: inline-block;
   margin: 0px 5px;
-  float: left;
   border-radius: 20px;
 }
 .legend-text {
