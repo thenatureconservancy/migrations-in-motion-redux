@@ -438,7 +438,9 @@
         <h2>References</h2>
         <p>
           Lawler, JJ, et al. 2013.
-          <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank"
+          <a
+            href="https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.12132"
+            target="_blank"
             >Projected climate-driven faunal movement routes</a
           >. Ecology Letters 16(8): 1014-1022.
         </p>
