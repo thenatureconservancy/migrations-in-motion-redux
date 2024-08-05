@@ -15,7 +15,6 @@
           openText="Open controls"
           closePosition="bottom"
           class="dat-gui-ui"
-          closed="true"
         >
           <!-- <dat-folder label="Keyboard Shortcuts">
             <p class="dat-meta">
@@ -332,9 +331,127 @@
         </div>
       </div>
       <!-- <div v-html="activeContent"></div> -->
-      <div v-for="c in content" :key="c.step">
+      <!-- <div v-for="c in content" :key="c.step">
         <div v-html="c.text"></div>
+      </div> -->
+      <div>
+        <!-- Overview -->
+        <p>
+          As climate change alters habitats and disrupts ecosystems, where will
+          animals move to survive? And will human development prevent them from
+          getting there?
+        </p>
+        <p>
+          This map shows the average direction mammals, birds, and amphibians
+          need to move to track hospitable climates as they shift across the
+          landscape. &darr;
+        </p>
+
+        <!-- How -->
+
+        <h2>How?</h2>
+        <p>
+          Researchers from University of Washington and The Nature Conservancy
+          modeled potential habitat for 2954 species using climate change
+          projections and the climatic needs of each species.
+        </p>
+        <p>
+          Using flow models from
+          <a href="https://www.circuitscape.org/" target="_blank"
+            >electronic circuit theory</a
+          >, they plotted movement routes for each species, connecting current
+          habitats with their projected locations under climate change.
+        </p>
+
+        <!-- What can we do -->
+        <h2>What Can We Do?</h2>
+        <p>
+          There are a number of ways that conservationists and land managers can
+          <a
+            href="https://blog.nature.org/science/2016/06/29/species-on-the-move-mapping-barriers-for-wildlife-in-a-warming-world/?utm_source=cgs&utm_medium=alsoin&utm_campaign=migrations"
+            target="_blank"
+            >re-build or maintain connectivity</a
+          >
+          to improve species’ ability to adapt to warmer temperatures. Removing
+          fencing, adding wildlife overpasses (or underpasses) to major
+          roadways, and better routing of infrastructure like pipelines and
+          powerlines can all help re-connect areas fragmented by human
+          development.
+        </p>
+
+        <!-- So -->
+        <h2>So...</h2>
+        <p>
+          <strong
+            >Q: Does this mean 3000 species will move through my backyard
+            because of climate change?</strong
+          >
+        </p>
+        <p>
+          <strong>A:</strong> No, the researchers used coarse 50 km data, which
+          is good for understanding the big picture view, but not good for
+          understanding local patterns.
+        </p>
+
+        <!-- Credits -->
+        <h2>Credits</h2>
+        <p>
+          This map was created by
+          <a href="mailto:dmajka@tnc.org" target="_blank">Dan Majka</a>, who
+          works for The Nature Conservancy's North America Region science team.
+        </p>
+
+        <p>
+          This work would have not been possible without the
+          <a
+            href="https://blog.nature.org/science/2018/04/26/innovation-for-conservation-brad-mcrae-1966-2017/"
+            target="_blank"
+            >pioneering connectivity science of Brad McRae (1966-2017)</a
+          >.
+        </p>
+
+        <h2>Bonus Fun!</h2>
+        <p>
+          The visualization uses code adapted from
+          <a href="https://github.com/FreshyLabs/windy">windy-js</a>, which
+          adapated code from the
+          <a href="https://github.com/cambecc/earth"
+            >earth 3D wind visualization</a
+          >, which was inspired by
+          <a href="http://hint.fm/wind/">hint.fm/wind</a>, which is based on the
+          concept of
+          <a href="https://natureofcode.com/autonomous-agents/#flow-fields"
+            >flow fields</a
+          >. To experiment with some of the underlying parameters, turn on
+          controls:
+        </p>
+
+        <div id="switch-container">
+          <label class="switch">
+            <input type="checkbox" @click="toggleDat" />
+            <span class="slider round"></span>
+          </label>
+          <span class="switch-label">Visualization Controls</span>
+        </div>
+
+        <!-- References -->
+        <h2>References</h2>
+        <p>
+          Lawler, JJ, et al. 2013.
+          <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank"
+            >Projected climate-driven faunal movement routes</a
+          >. Ecology Letters 16(8): 1014-1022.
+        </p>
+        <p>
+          McGuire, JL, et al. 2016.
+          <a
+            href="http://www.pnas.org/content/113/26/7195.abstract"
+            target="_blank"
+            >Achieving climate connectivity in a fragmented landscape</a
+          >. Proceedings of the National Academy of Sciences: 113: 7195-7200.
+        </p>
       </div>
+
       <img
         src="tnc-logo-light.svg"
         alt="The Nature Conservancy"
@@ -366,20 +483,6 @@
     <div class="mapbox-map-container nocursor">
       <div id="map" class="nocursor"></div>
     </div>
-    <!-- <div id="legend">
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #fcfa47"></div>
-        <div class="legend-text">Amphibians</div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #47d4fc"></div>
-        <div class="legend-text">Birds</div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: #fc47dc"></div>
-        <div class="legend-text">Mammals</div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -395,7 +498,7 @@ export default {
   data: function () {
     return {
       showCaption: true,
-      showDat: true,
+      showDat: false,
       mapSatelliteOpacity: 0,
       map: {},
       mapLandColor: "#000000",
@@ -786,6 +889,7 @@ export default {
           step: 5,
           text: "<h2>Credits</h2><p>This map was created by <a href='mailto:dmajka@tnc.org' target='_blank'>Dan Majka</a>, who works for The Nature Conservancy's North America Region science team.</p><p>This work would have not been possible without the <a href='https://blog.nature.org/science/2018/04/26/innovation-for-conservation-brad-mcrae-1966-2017/' target='_blank'>pioneering connectivity science of Brad McRae (1966-2017).</p>",
         },
+
         {
           step: 7,
           text: '<h2>References</h2><p>Lawler, JJ, et al. 2013. <a href="Lawler.2013.EcolLettersClimateRoutes.pdf" target="_blank">Projected climate-driven faunal movement routes</a>. Ecology Letters 16(8): 1014-1022. </p><p>McGuire, JL, et al. 2016. <a href="http://www.pnas.org/content/113/26/7195.abstract" target="_blank">Achieving climate connectivity in a fragmented landscape</a>. Proceedings of the National Academy of Sciences: 113: 7195-7200.</p>',
@@ -899,7 +1003,7 @@ export default {
         center: [-78, 19], // NA-SA
         zoom: 3, // starting zoom, // NA-SA
         attributionControl: true,
-        hash: false,
+        hash: true,
       });
 
       // disable map rotation using right click + drag
@@ -1741,5 +1845,78 @@ a:hover {
   width: 150px;
   height: auto;
   margin: 15px 0 10px;
+}
+
+#switch-container {
+  display: block;
+  margin: 20px 10px 15px;
+}
+#switch-container .switch-label {
+  font-size: 14px;
+  margin: 0 10px;
+}
+
+/* The switch - the box around the slider */
+#switch-container .switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+/* Hide default HTML checkbox */
+#switch-container .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+#switch-container .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+#switch-container .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 1px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+#switch-container input:checked + .slider {
+  background-color: #2196f3;
+}
+
+#switch-container input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+#switch-container input:checked + .slider:before {
+  -webkit-transform: translateX(18px);
+  -ms-transform: translateX(18px);
+  transform: translateX(18px);
+}
+
+/* Rounded sliders */
+#switch-container .slider.round {
+  border-radius: 20px;
+}
+
+#switch-container .slider.round:before {
+  border-radius: 50%;
 }
 </style>
